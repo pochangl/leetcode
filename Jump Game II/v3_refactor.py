@@ -54,7 +54,10 @@ class Solution(object):
         return len(path)
 
 
-print(Solution().jump([2,3,1,1,4]))
-print(Solution().jump([1, 2, 3]))
-print(Solution().jump([5,9,3,2,1,0,2,3,3,1,0,0]))
-print(Solution().jump([5,9,3,2,1,0,2,3,3,1,0,0]))
+assert Solution().jump([]) == 0
+assert Solution().jump([1]) == 0
+assert Solution().jump([2,3,1,1,4]) == 2
+assert Solution().jump([1, 2, 3]) == 2
+assert Solution().jump([5,9,3,2,1,0,2,3,3,1,0,0]) == 3
+assert Solution().jump([5,9,3,2,1,0,2,3,3,1,0,0]) == 3
+print('All pass')
