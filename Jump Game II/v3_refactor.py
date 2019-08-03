@@ -38,12 +38,12 @@ def steps(nums):
     nxt = nodes[1]
 
     for step in range(len(nums)):
-        if best.reach >= last.position:
-            yield last.position
-            break
 
         new_best = max(nodes[nxt.position: best.reach + 1])
         yield new_best.position
+        if new_best.reach >= last.position:
+            yield last.position
+            break
         nxt = nodes[best.position + 1]
         best = new_best
 
