@@ -5,6 +5,7 @@ Created on Sat Aug  3 14:29:59 2019
 
 @author: pochangl
 """
+from  contextlib import suppress
 
 
 class Node:
@@ -34,18 +35,17 @@ def steps(nums):
     )
 
     best = nodes[0]
-    last = nodes[-1]
     nxt = nodes[1]
 
     for step in range(len(nums)):
-
         new_best = max(nodes[nxt.position: best.reach + 1])
         yield new_best.position
-        if new_best.reach >= last.position:
-            yield last.position
+        try:
+            nxt = nodes[new_best.position + 1]
+        except IndexError:
             break
-        nxt = nodes[best.position + 1]
         best = new_best
+
 
     
 class Solution(object):
