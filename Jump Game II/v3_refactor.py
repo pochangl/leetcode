@@ -33,9 +33,8 @@ def steps(nums):
         in enumerate(nums)
     )
 
-    base = nodes[0]
+    best = nodes[0]
     last = nodes[-1]
-    best = base
     nxt = nodes[1]
 
     for step in range(len(nums)):
@@ -46,7 +45,7 @@ def steps(nums):
         new_best = max(nodes[nxt.position: best.reach + 1])
         yield new_best.position
         nxt = nodes[best.position + 1]
-        base = best = new_best
+        best = new_best
 
     
 class Solution(object):
