@@ -40,7 +40,7 @@ def steps(nums):
     for step in range(len(nums)):
         if best.reach >= last.position:
             yield last.position
-            return
+            break
 
         new_best = max(nodes[nxt.position: best.reach + 1])
         yield new_best.position
