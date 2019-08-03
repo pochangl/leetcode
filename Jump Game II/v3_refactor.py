@@ -44,12 +44,11 @@ def steps(nums):
         if best.reach >= last.position:
             yield last.position
             return
-        for target in nodes[nxt.position: best.reach + 1]:
-            if best < target:
-                best = target
-        yield best.position
-        nxt = nodes[target.position + 1]
-        base = best
+
+        new_best = max(nodes[nxt.position: best.reach + 1])
+        yield new_best.position
+        nxt = nodes[best.position + 1]
+        base = best = new_best
 
     
 class Solution(object):
