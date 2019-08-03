@@ -5,7 +5,7 @@ Created on Sat Aug  3 14:29:59 2019
 
 @author: pochangl
 """
-from  contextlib import suppress
+from functools import wraps
 
 
 class Node:
@@ -24,27 +24,40 @@ class Node:
         return 'Node(position: %s, reach: %s, steps: %s)' % (self.position, self.reach, self.steps)
 
 
-def steps(nums):
-    if len(nums) < 2:
-        return
+def generator_suppress(*exceptions):
+    '''
+        contextlib.supress 的 generator decorator 版本
+    '''
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                yield from func(*args, **kwargs)
+            except exceptions:
+                pass
+        return wrapper
+    return decorator
 
+
+@generator_suppress(IndexError)
+def steps(nums):
     nodes = tuple(
         Node(position=index, steps=num)
         for index, num
         in enumerate(nums)
     )
 
+    # IndexError 會發生的地方, 當length < 2時會發生
     best = nodes[0]
     nxt = nodes[1]
 
-    with suppress(IndexError):
-        for step in range(len(nums)):
-            new_best = max(nodes[nxt.position: best.reach + 1])
-            yield new_best.position
+    for step in range(len(nums)):
+        new_best = max(nodes[nxt.position: best.reach + 1])
+        yield new_best.position
 
-            # 唯一 IndexError會發生的地方, 配合 with suppress 使用
-            nxt = nodes[new_best.position + 1]
-            best = new_best
+        # IndexError 會發生的地方, 配合 with suppress 使用
+        nxt = nodes[new_best.position + 1]
+        best = new_best
 
     
 class Solution(object):
