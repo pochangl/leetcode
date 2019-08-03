@@ -24,9 +24,7 @@ class Node:
 
 
 def steps(nums):
-    length = len(nums)
-    
-    if length < 2:
+    if len(nums) < 2:
         return
 
     nodes = tuple(
@@ -57,7 +55,6 @@ def steps(nums):
 class Solution(object):
     def jump(self, nums):
         path = list(steps(nums))
-        print(path)
         return len(path)
 
 
