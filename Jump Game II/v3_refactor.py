@@ -37,10 +37,8 @@ def steps(nums):
     last = nodes[-1]
     best = base
     nxt = nodes[1]
-    step = 0
 
-    while True:
-        step += 1
+    for step in range(len(nums)):
         if best.reach >= last.position:
             yield last.position
             return
