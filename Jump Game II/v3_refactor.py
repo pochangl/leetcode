@@ -54,12 +54,11 @@ def steps(nums):
     nxt = nodes[1]
 
     for step in range(len(nums)):
-        new_best = max(nodes[nxt.position: best.reach + 1])
-        yield new_best.position
+        best = max(nodes[nxt.position: best.reach + 1])
+        yield best.position
 
         # IndexError 會發生的地方, 配合 with suppress 使用
-        nxt = nodes[new_best.position + 1]
-        best = new_best
+        nxt = nodes[best.position + 1]
 
 
 class Solution(object):
