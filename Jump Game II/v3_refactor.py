@@ -26,7 +26,8 @@ class Node:
         return self.reach > node.reach or not node.steps
 
     def __repr__(self):
-        return 'Node(position: %s, reach: %s, steps: %s)' % (self.position, self.reach, self.steps)
+        return 'Node(position: %s, reach: %s, steps: %s)' % (
+                self.position, self.reach, self.steps)
 
 
 def generator_suppress(*exceptions):
@@ -63,7 +64,7 @@ def steps(nums):
         nxt = nodes[new_best.position + 1]
         best = new_best
 
-    
+
 class Solution(object):
     def jump(self, nums):
         path = list(steps(nums))
@@ -72,9 +73,8 @@ class Solution(object):
 
 assert Solution().jump([]) == 0
 assert Solution().jump([1]) == 0
-assert Solution().jump([3,2,1]) == 1
-assert Solution().jump([2,3,1,1,4]) == 2
+assert Solution().jump([3, 2, 1]) == 1
+assert Solution().jump([2, 3, 1, 1, 4]) == 2
 assert Solution().jump([1, 2, 3]) == 2
-assert Solution().jump([5,9,3,2,1,0,2,3,3,1,0,0]) == 3
-assert Solution().jump([5,9,3,2,1,0,2,3,3,1,0,0]) == 3
+assert Solution().jump([5, 9, 3, 2, 1, 0, 2, 3, 3, 1, 0, 0]) == 3
 print('All pass')
