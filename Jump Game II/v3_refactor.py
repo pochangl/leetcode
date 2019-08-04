@@ -10,9 +10,6 @@ from math import inf
 
 
 class Node:
-    # __slot__ might not be pythonic but fast
-    __slot__ = ('position', 'reach', 'steps', '__gt__')
-
     def __init__(self, position, steps, maximum):
         self.position = position
         self.steps = steps
