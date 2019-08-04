@@ -6,16 +6,21 @@ Created on Sat Aug  3 14:29:59 2019
 @author: pochangl
 """
 from functools import wraps
+from math import inf
 
 
 class Node:
     # __slot__ might not be pythonic but fast
     __slot__ = ('position', 'reach', 'steps', '__gt__')
 
-    def __init__(self, position, steps):
+    def __init__(self, position, steps, maximum):
         self.position = position
         self.steps = steps
-        self.reach = position + steps
+
+        if position != maximum:
+            self.reach = position + steps
+        else:
+            self.reach = inf
 
     def __gt__(self, node):
         return self.reach > node.reach or not node.steps
@@ -42,9 +47,8 @@ def generator_suppress(*exceptions):
 @generator_suppress(IndexError)
 def steps(nums):
     nodes = tuple(
-        Node(position=index, steps=num)
-        for index, num
-        in enumerate(nums)
+        Node(position=index, steps=num, maximum=len(nums) - 1)
+        for index, num in enumerate(nums)
     )
 
     # IndexError 會發生的地方, 當length < 2時會發生
