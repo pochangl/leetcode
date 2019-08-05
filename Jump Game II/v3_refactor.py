@@ -51,7 +51,8 @@ def steps(nums):
 
     for _ in nums:
         # TypeError 會發生的地方
-        best = max(nodes[best.position + 1: best.reach + 1], key=lambda n: n.reach)
+        best = max(nodes[best.position + 1: best.reach + 1],
+                   key=lambda n: n.reach)
         yield best.position
 
 
