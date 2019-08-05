@@ -46,10 +46,11 @@ def steps(nums):
         for index, num in enumerate(nums)
     )
 
-    # IndexError 會發生的地方, 當length < 2時會發生
+    # IndexError 會發生的地方, 當length == 0 時會發生
     best = nodes[0]
 
-    for step in range(len(nums)):
+    for _ in nums:
+        # TypeError 會發生的地方
         best = max(nodes[best.position + 1: best.reach + 1], key=lambda n: n.reach)
         yield best.position
 
