@@ -19,9 +19,6 @@ class Node:
         else:
             self.reach = inf
 
-    def __gt__(self, node):
-        return self.reach > node.reach or not node.steps
-
     def __repr__(self):
         return 'Node(position: %s, reach: %s, steps: %s)' % (
                 self.position, self.reach, self.steps)
@@ -53,7 +50,7 @@ def steps(nums):
     best = nodes[0]
 
     for step in range(len(nums)):
-        best = max(nodes[best.position + 1: best.reach + 1])
+        best = max(nodes[best.position + 1: best.reach + 1], key=lambda n: n.reach)
         yield best.position
 
 
