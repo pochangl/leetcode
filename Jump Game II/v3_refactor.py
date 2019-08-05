@@ -10,14 +10,14 @@ from math import inf
 
 
 class Node:
-    def __init__(self, position, steps, maximum):
+    def __init__(self, position, steps, goal):
         self.position = position
         self.steps = steps
 
-        if position != maximum:
-            self.reach = position + steps
-        else:
+        if position == goal:
             self.reach = inf
+        else:
+            self.reach = position + steps
 
     def __repr__(self):
         return 'Node(position: %s, reach: %s, steps: %s)' % (
@@ -41,9 +41,13 @@ def generator_suppress(*exceptions):
 
 @generator_suppress(IndexError, TypeError)
 def steps(nums):
+    goal = len(nums) -1
     nodes = tuple(
-        Node(position=index, steps=num, maximum=len(nums) - 1)
-        for index, num in enumerate(nums)
+        Node(
+            position=position,
+            steps=num,
+            goal=goal)
+        for position, num in enumerate(nums)
     )
 
     # IndexError 會發生的地方, 當length == 0 時會發生
