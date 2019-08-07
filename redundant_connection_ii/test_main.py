@@ -22,7 +22,8 @@ class TestSolution(TestCase):
         self.assertEqual(result, redundant, ('---------', edges, redundant, len(result)))
 
     def test_run(self):
-        self.run_test(n=4)
+        for _ in range(10000):
+            self.run_test(n=4)
 
     def run_case(self, expect, edges):
         solution = Solution()
@@ -46,6 +47,20 @@ class TestSolution(TestCase):
         edges = [[2, 1], [5, 3], [3, 1], [4, 2], [1, 4]]
         self.run_case(expect, edges)
 
+    def test_case3(self):
+        expect = [2, 2]
+        edges = [(0, 1), (0, 2), (1, 3), [2, 2]]
+        self.run_case(expect, edges)
+
+    def test_case4(self):
+        expect = [1, 0]
+        edges = [(0, 1), (0, 2), [1, 0], (1, 3)]
+        self.run_case(expect, edges)
+
+    def test_case5(self):
+        expect = [0, 0]
+        edges = [(0, 1), [0, 0], (0, 2), (2, 3)]
+        self.run_case(expect, edges)
 
     def test_speed(self):
         O = BigO(F.linear, func=self.run_test)

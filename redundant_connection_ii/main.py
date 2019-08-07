@@ -5,10 +5,12 @@ class Solution:
     def findRedundantDirectedConnection(self, edges):
         graph = dict()
         exclude = None
+        include = None
 
         for parent, child in edges:
             if child in graph:
                 exclude = [parent, child]
+                include = [graph[child], child]
             else:
                 graph[child] = parent
 
@@ -16,27 +18,35 @@ class Solution:
         children = set(graph.keys())
 
         orphans = parents - children
-        if exclude and not exclude[0] in parents:
-            child = exclude[1]
-            return [graph[child], child]
 
-        if len(orphans) == 2:
-            child = exclude[1]
-            return [graph[child], child]
-        elif len(orphans):
+        if len(orphans) >= 2:
             return exclude
+        elif len(orphans) == 1:
+            tree = defaultdict(set)
+            for child, parent in graph.items():
+                tree[parent].add(child)
+            start = include[0]
+            nodes = set([start])
+            while nodes:
+                parent = nodes.pop()
+                for child in tree[parent]:
+                    if child == start:
+                        return include
+                    nodes.add(child)
+            return exclude
+        elif exclude:
+            return include
 
         excludes = children - parents
-        child_count = Counter(graph.values())
+        parent_count = Counter(graph.values())
 
         while excludes:
             child = excludes.pop()
             parent = graph.pop(child)
-            child_count[parent] -= 1
-            if not child_count[parent]:
+            parent_count[parent] -= 1
+            if not parent_count[parent]:
                 excludes.add(parent)
 
         for parent, child in reversed(edges):
-            if child in graph:
+            if child in graph and graph[child] == parent:
                 return [parent, child]
-        raise Exception('no one should be here, no one')
