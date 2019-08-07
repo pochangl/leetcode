@@ -22,11 +22,15 @@ class Node:
         self.plinks = set()
         self.clinks = set()
 
-    def is_leave(self):
-        return len(self.clinks) == 0 and len(self.plinks) >= 1
+    def can_remove(self):
+        return len(self.clinks) + len(self.plinks) == 1
 
     def __repr__(self):
         return 'Node(parent={} child={})'.format(self.plinks, self.clinks)
+
+    @property
+    def links(self):
+        return self.plinks or self.clinks
 
 
 class Solution:
@@ -35,19 +39,21 @@ class Solution:
         parent.clinks.remove(link)
         child = self.nodes[link.child]
         child.plinks.remove(link)
-        self.links.pop(link.index, False)
+        self.links.pop(link, False)
 
     def mark_link(self, link: Link):
         self.graph[link.parent].add(link.child)
         self.drop_link(link)
 
     def clean_node(self, node: Node):
-        if node.is_leave():
-            if len(node.plinks):
-                link = next(iter(node.plinks))
+        if node.can_remove():
+            if node.links:
+                link = next(iter(node.links))
                 self.mark_link(link)
                 parent = self.nodes[link.parent]
                 self.clean_node(parent)
+                child = self.nodes[link.child]
+                self.clean_node(child)
 
     def findRedundantDirectedConnection(self, edges):
         self.links = links = OrderedDict()
@@ -68,6 +74,8 @@ class Solution:
             self.drop_link(link)
             parent = nodes[link.parent]
             self.clean_node(parent)
+            child = nodes[link.child]
+            self.clean_node(child)
 
         result = []
         for parent, child in edges:
