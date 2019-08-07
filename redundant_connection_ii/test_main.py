@@ -22,8 +22,7 @@ class TestSolution(TestCase):
         self.assertEqual(result, redundant, ('---------', edges, redundant, len(result)))
 
     def test_run(self):
-        for _ in range(10000):
-            self.run_test(n=3)
+        self.run_test(n=4)
 
     def run_case(self, expect, edges):
         solution = Solution()
@@ -35,8 +34,18 @@ class TestSolution(TestCase):
             simple case
         '''
         expect = [2, 1]
-        edges = ((2, 1), (3, 1), (4, 2), (1, 4))
+        edges = [[2, 1], [3, 1], [4, 2], [1, 4]]
         self.run_case(expect, edges)
+
+    def test_case2(self):
+        '''
+            simple case
+            bug: loop on same brach causes errors
+        '''
+        expect = [2, 1]
+        edges = [[2, 1], [5, 3], [3, 1], [4, 2], [1, 4]]
+        self.run_case(expect, edges)
+
 
     def test_speed(self):
         O = BigO(F.linear, func=self.run_test)
