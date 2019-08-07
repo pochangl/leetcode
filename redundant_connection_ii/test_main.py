@@ -1,5 +1,6 @@
 from random import randint
 from unittest import TestCase
+from utils.performance import BigO, F, MemoryScore
 from .main import Solution
 
 
@@ -64,3 +65,11 @@ class TestSolution(TestCase):
         expect = [(2, 2), (3, 2), (0, 0), (2, 5)]
         edges = [(0, 1), (0, 2), (2, 2), (1, 3), (3, 2), (3, 4), (0, 0), (0, 5), (2, 5)]
         self.run_case(expect, edges)
+
+    def test_speed(self):
+        O = BigO(F.linear, func=self.run_test)
+        O.check(2000, times=30)
+
+    def test_memory(self):
+        O = BigO(F.linear, func=self.run_test, scorer=MemoryScore)
+        O.check(2000, times=2)
