@@ -27,11 +27,10 @@ def steps(nums):
     search_pos = 1
 
     while best.reach < goal:
-        next_search = best.reach + 1
         next_best = max(nodes[search_pos: best.reach + 1],
                         key=lambda n: n.reach)
         yield best.position
-        search_pos = next_search
+        search_pos = best.reach + 1
         best = next_best
 
     yield goal
