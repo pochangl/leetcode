@@ -64,12 +64,3 @@ class Solution(object):
     def jump(self, nums):
         path = list(steps(nums))
         return len(path)
-
-
-assert Solution().jump([]) == 0
-assert Solution().jump([1]) == 0
-assert Solution().jump([3, 2, 1]) == 1
-assert Solution().jump([2, 3, 1, 1, 4]) == 2
-assert Solution().jump([1, 2, 3]) == 2
-assert Solution().jump([5, 9, 3, 2, 1, 0, 2, 3, 3, 1, 0, 0]) == 3
-print('All pass')
