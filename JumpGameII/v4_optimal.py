@@ -39,7 +39,7 @@ def generator_suppress(*exceptions):
     return decorator
 
 
-@generator_suppress(IndexError, TypeError)
+@generator_suppress(IndexError)
 def steps(nums):
     goal = len(nums) - 1
     nodes = tuple(
@@ -53,8 +53,7 @@ def steps(nums):
     # IndexError 會發生的地方, 當length == 0 時會發生
     best = nodes[0]
 
-    for _ in nums:
-        # TypeError 會發生的地方
+    while best.reach != inf:
         best = max(nodes[best.position + 1: best.reach + 1],
                    key=lambda n: n.reach)
         yield best.position
