@@ -29,12 +29,11 @@ def steps(nums):
     while best.reach < goal:
         next_best = max(nodes[last_reach + 1: best.reach + 1],
                         key=lambda n: n.reach)
-        yield best.position
+        yield next_best.position
         last_reach = best.reach
         best = next_best
 
     yield goal
-
 
 class Solution(object):
     def jump(self, nums):
