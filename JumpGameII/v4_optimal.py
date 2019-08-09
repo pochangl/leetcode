@@ -19,10 +19,6 @@ class Node:
         else:
             self.reach = position + steps
 
-    def __repr__(self):
-        return 'Node(position: %s, reach: %s, steps: %s)' % (
-                self.position, self.reach, self.steps)
-
 
 def steps(nums):
     goal = len(nums) - 1
