@@ -6,13 +6,10 @@ Created on Sat Aug  3 14:29:59 2019
 @author: pochangl
 """
 from functools import wraps
+from collections import namedtuple
 
 
-class Node:
-    def __init__(self, position, steps, goal):
-        self.position = position
-        self.steps = steps
-        self.reach = position + steps
+Node = namedtuple('Node', ['position', 'reach'])
 
 
 def steps(nums):
@@ -20,8 +17,7 @@ def steps(nums):
     nodes = tuple(
         Node(
             position=position,
-            steps=num,
-            goal=goal)
+            reach=position + num)
         for position, num in enumerate(nums)
     )
 
