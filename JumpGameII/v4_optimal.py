@@ -24,22 +24,6 @@ class Node:
                 self.position, self.reach, self.steps)
 
 
-def generator_suppress(*exceptions):
-    '''
-        contextlib.supress 的 generator decorator 版本
-    '''
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            try:
-                yield from func(*args, **kwargs)
-            except exceptions:
-                pass
-        return wrapper
-    return decorator
-
-
-@generator_suppress(IndexError)
 def steps(nums):
     goal = len(nums) - 1
     nodes = tuple(
@@ -50,7 +34,8 @@ def steps(nums):
         for position, num in enumerate(nums)
     )
 
-    # IndexError 會發生的地方, 當length == 0 時會發生
+    if not nums:
+        return
     best = nodes[0]
 
     while best.reach != inf:
