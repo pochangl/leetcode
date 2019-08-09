@@ -1,4 +1,5 @@
 from unittest import TestCase
+import random
 from .v4_optimal import Solution
 
 
@@ -36,3 +37,9 @@ class TestSolution(TestCase):
         data = [5, 9, 3, 2, 1, 0, 2, 3, 3, 1, 0, 0]
         expect = 3
         self.run_test(data=data, expect=expect)
+
+    def test_performance(self):
+        size = 500000
+        data = list(random.randint(1, 50) for _ in range(size))
+
+        Solution().jump(data)
