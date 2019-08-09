@@ -41,7 +41,7 @@ def generator_suppress(*exceptions):
 
 @generator_suppress(IndexError, TypeError)
 def steps(nums):
-    goal = len(nums) -1
+    goal = len(nums) - 1
     nodes = tuple(
         Node(
             position=position,
