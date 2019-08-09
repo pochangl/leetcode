@@ -6,18 +6,13 @@ Created on Sat Aug  3 14:29:59 2019
 @author: pochangl
 """
 from functools import wraps
-from math import inf
 
 
 class Node:
     def __init__(self, position, steps, goal):
         self.position = position
         self.steps = steps
-
-        if position == goal:
-            self.reach = inf
-        else:
-            self.reach = position + steps
+        self.reach = position + steps
 
 
 def steps(nums):
@@ -30,14 +25,16 @@ def steps(nums):
         for position, num in enumerate(nums)
     )
 
-    if not nums:
+    if len(nums) < 2:
         return
     best = nodes[0]
 
-    while best.reach != inf:
+    while best.reach < goal:
         best = max(nodes[best.position + 1: best.reach + 1],
                    key=lambda n: n.reach)
         yield best.position
+
+    yield goal
 
 
 class Solution(object):
