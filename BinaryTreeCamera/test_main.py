@@ -4,7 +4,7 @@ from .main import Solution
 from dsa.tree.binary import BinaryTree
 
 
-class TestSteps(TestCase):
+class TestSolution(TestCase):
     def run_test(self, data, expect):
         tree = BinaryTree.from_list(data)
         result = Solution().minCameraCover(tree)
