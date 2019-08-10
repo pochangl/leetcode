@@ -25,3 +25,23 @@ class TestSteps(TestCase):
         data = [0, 0, None, 0, None, 0, None, None, 0]
         expect = 2
         self.run_test(data, expect)
+
+    def test_case3(self):
+        '''
+            測基本型
+        '''
+        data = [0]
+        expect = 1
+        self.run_test(data, expect)
+
+    def test_straight_line(self):
+        '''
+            測直線結構
+        '''
+        base = [0, None]
+        lengthes = [1, 2, 3, 4, 5, 6, 7]
+        expects =  [1, 2, 1, 2, 2, 2, 3]
+
+        for length, expect in zip(lengthes, expects):
+            data = base * length
+            self.run_test(data, expect)
