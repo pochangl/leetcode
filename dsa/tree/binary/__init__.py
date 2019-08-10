@@ -1,4 +1,3 @@
-import copy
 import random
 from collections import deque
 from contextlib import suppress
@@ -35,6 +34,10 @@ class BinaryTree:
 
     def __str__(self):
         return repr(self)
+
+    def clone(self):
+        lst = self.to_list()
+        return type(self).from_list(lst)
 
     def to_list(self):
         queue = deque()

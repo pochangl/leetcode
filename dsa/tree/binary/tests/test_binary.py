@@ -84,3 +84,14 @@ class TestBinaryTree(TestCase):
         size = 80
         tree = BT.from_size(size)
         self.assertEqual(len(tree), size)
+
+    def test_clone(self):
+        def verify(root1, root2):
+            if root1 is None:
+                self.assertIsNone(root2)
+            self.assertIsNot(root1, root2)
+            self.assertEqual(root1.val, root2.val)
+        tree = BT.from_size(10)
+        copied = tree.clone()
+        self.assertEqual(tree, copied)
+        verify(tree, copied)
