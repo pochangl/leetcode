@@ -8,7 +8,7 @@ class TestSteps(TestCase):
     def run_test(self, data, expect):
         tree = BinaryTree.from_list(data)
         result = Solution().minCameraCover(tree)
-        self.assertEqual(result, expect)
+        self.assertEqual(result, expect, 'data: {}'.format(data))
 
     def test_case1(self):
         '''
