@@ -38,7 +38,7 @@ class TestBranch(TestCase):
 
         # monitored center
         tree = root.clone()
-        root.left.left.right = leave.clone()
+        tree.left.left = monitored.clone()
 
         self.run_test(tree, None, 3)
         self.run_test(tree, leave, 3)
@@ -47,7 +47,7 @@ class TestBranch(TestCase):
 
         # camera center
         tree = root.clone()
-        root.left.left.right = monitored.clone()
+        tree.left.left = camera.clone()
 
         self.run_test(tree, None, 2)
         self.run_test(tree, leave, 2)
@@ -72,7 +72,7 @@ class TestBranch(TestCase):
 
         # monitored center
         tree = root.clone()
-        root.left.left.right = leave.clone()
+        tree.left.left = monitored.clone()
 
         self.run_test(tree, None, 3)
         self.run_test(tree, leave, 4)
@@ -81,7 +81,7 @@ class TestBranch(TestCase):
 
         # camera center
         tree = root.clone()
-        root.left.left.right = monitored.clone()
+        tree.left.left = camera.clone()
 
         self.run_test(tree, None, 3)
         self.run_test(tree, leave, 3)
@@ -90,7 +90,7 @@ class TestBranch(TestCase):
 
     def test_camera_parent(self):
         root = monitored.clone()
-        root.left = monitored.clone()
+        root.left = camera.clone()
         root.left.left = node.clone()
 
         # normal center
@@ -98,12 +98,12 @@ class TestBranch(TestCase):
 
         self.run_test(tree, None, 2)
         self.run_test(tree, leave, 3)
-        self.run_test(tree, monitored, 4)
+        self.run_test(tree, monitored, 3)
         self.run_test(tree, camera, 3)
 
         # monitored center
         tree = root.clone()
-        root.left.left.right = leave.clone()
+        tree.left.left = monitored.clone()
 
         self.run_test(tree, None, 3)
         self.run_test(tree, leave, 4)
@@ -112,7 +112,7 @@ class TestBranch(TestCase):
 
         # camera center
         tree = root.clone()
-        root.left.left.right = monitored.clone()
+        tree.left.left = camera.clone()
 
         self.run_test(tree, None, 3)
         self.run_test(tree, leave, 3)
