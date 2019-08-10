@@ -17,18 +17,31 @@ empty = node.clone()
 
 
 class TestRoot(TestCase):
-    def run_test(self, root, epxect):
+    def run_test(self, root, left, expect):
+        root.left = left
         result = Solution().minCameraCover(root)
         self.assertEqual(expect, result, list(root.to_list()))
 
     def test_normal_root(self):
         root = node.clone()
 
+        self.run_test(root, None, 1)
+        self.run_test(root, leave, 1)
+        self.run_test(root, camera, 1)
+
     def test_monitored_root(self):
         root = monitored.clone()
 
+        self.run_test(root, None, 1)
+        self.run_test(root, leave, 2)
+        self.run_test(root, camera, 2)
+
     def test_camera_root(self):
         root = camera.clone()
+
+        self.run_test(root, None, 1)
+        self.run_test(root, leave, 1)
+        self.run_test(root, camera, 2)
 
 
 class TestBranch(TestCase):
