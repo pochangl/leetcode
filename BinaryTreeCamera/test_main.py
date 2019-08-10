@@ -50,3 +50,17 @@ class TestSteps(TestCase):
         for length, expect in zip(lengthes, expects):
             data = base * length
             self.run_test(data, expect)
+
+    def test_root(self):
+        datum = [
+            [0],           # 單一root
+            [0, 0],        # root.left
+            [0, None, 0],  # root.right
+            [0, 0, 0],     # root.left and root.right
+        ]
+        for data in datum:
+            # 希望data沒被搞壞
+            self.assertIsInstance(data, list)
+            self.assertEqual(data[0], 0)
+
+            self.run_test(data, 1)
