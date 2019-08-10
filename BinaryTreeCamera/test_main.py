@@ -4,6 +4,122 @@ from .main import Solution
 from dsa.tree.binary import BinaryTree
 
 
+node = BinaryTree(0)
+leave = node.clone()
+
+camera = node.clone()
+camera.right = BinaryTree(0)
+
+monitored = camera.clone()
+monitored.right.right = BinaryTree(0)
+
+empty = node.clone()
+
+
+class TestBranch(TestCase):
+    def run_test(self, root, left, expect):
+        center = root.left.left
+        center.left = left
+        result = Solution().minCameraCover(root)
+        self.assertEqual(expect, result, list(root.to_list()))
+
+    def test_normal_parent(self):
+        root = monitored.clone()
+        root.left = node.clone()
+        root.left.left = node.clone()
+
+        # normal center
+        tree = root.clone()
+
+        self.run_test(tree, None, 2)
+        self.run_test(tree, leave, 2)
+        self.run_test(tree, monitored, 3)
+        self.run_test(tree, camera, 3)
+
+        # monitored center
+        tree = root.clone()
+        root.left.left.right = leave.clone()
+
+        self.run_test(tree, None, 3)
+        self.run_test(tree, leave, 3)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 4)
+
+        # camera center
+        tree = root.clone()
+        root.left.left.right = monitored.clone()
+
+        self.run_test(tree, None, 2)
+        self.run_test(tree, leave, 2)
+        self.run_test(tree, monitored, 3)
+        self.run_test(tree, camera, 3)
+
+    def test_monitored_parent(self):
+        root = monitored.clone()
+        root.left = monitored.clone()
+        root.left.left = node.clone()
+        # None right
+        tree = root.clone()
+        root.left.left.right = None
+
+        # normal center
+        tree = root.clone()
+
+        self.run_test(tree, None, 3)
+        self.run_test(tree, leave, 3)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 3)
+
+        # monitored center
+        tree = root.clone()
+        root.left.left.right = leave.clone()
+
+        self.run_test(tree, None, 3)
+        self.run_test(tree, leave, 4)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 4)
+
+        # camera center
+        tree = root.clone()
+        root.left.left.right = monitored.clone()
+
+        self.run_test(tree, None, 3)
+        self.run_test(tree, leave, 3)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 4)
+
+    def test_camera_parent(self):
+        root = monitored.clone()
+        root.left = monitored.clone()
+        root.left.left = node.clone()
+
+        # normal center
+        tree = root.clone()
+
+        self.run_test(tree, None, 2)
+        self.run_test(tree, leave, 3)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 3)
+
+        # monitored center
+        tree = root.clone()
+        root.left.left.right = leave.clone()
+
+        self.run_test(tree, None, 3)
+        self.run_test(tree, leave, 4)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 4)
+
+        # camera center
+        tree = root.clone()
+        root.left.left.right = monitored.clone()
+
+        self.run_test(tree, None, 3)
+        self.run_test(tree, leave, 3)
+        self.run_test(tree, monitored, 4)
+        self.run_test(tree, camera, 4)
+
+
 class TestSolution(TestCase):
     def run_test(self, data, expect):
         tree = BinaryTree.from_list(data)
