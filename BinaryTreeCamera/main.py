@@ -5,7 +5,7 @@ from collections import namedtuple
 Result = namedtuple('Result', ['is_monitored', 'has_camera', 'count'])
 
 
-def decision(node, left, right):
+def decision(node, left: Result, right: Result):
     if node is None:
         return Result(is_monitored=True, has_camera=False, count=0)
 
