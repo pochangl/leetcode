@@ -16,6 +16,21 @@ monitored.right.right = BinaryTree(0)
 empty = node.clone()
 
 
+class TestRoot(TestCase):
+    def run_test(self, root, epxect):
+        result = Solution().minCameraCover(root)
+        self.assertEqual(expect, result, list(root.to_list()))
+
+    def test_normal_root(self):
+        root = node.clone()
+
+    def test_monitored_root(self):
+        root = monitored.clone()
+
+    def test_camera_root(self):
+        root = camera.clone()
+
+
 class TestBranch(TestCase):
     def run_test(self, root, left, expect):
         center = root.left.left
