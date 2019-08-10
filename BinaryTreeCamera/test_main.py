@@ -1,12 +1,14 @@
 import random
 from unittest import TestCase
 from .main import Solution
+from dsa.tree.binary import BinaryTree
 
 
 class TestSteps(TestCase):
     def run_test(self, data, expect):
-        result = Solution().minCameraCover(data)
-        self.assertEqual(list(result), expect)
+        tree = BinaryTree.from_list(data)
+        result = Solution().minCameraCover(tree)
+        self.assertEqual(result, expect)
 
     def test_case1(self):
         data = [0, 0, None, None, 0, 0]
