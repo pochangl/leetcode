@@ -64,3 +64,10 @@ class TestSteps(TestCase):
             self.assertEqual(data[0], 0)
 
             self.run_test(data, 1)
+
+    def test_full(self):
+        levels =  [1, 2, 3, 4, 5]
+        expects = [1, 1, 3, 5, 10]
+        for level, expect in zip(levels, expects):
+            data = [0] * (2**level - 1)
+            self.run_test(data, expect)
