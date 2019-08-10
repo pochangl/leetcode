@@ -29,7 +29,9 @@ class BinaryTree:
         return total
 
     def __repr__(self):
-        return '<BinaryTree {}>'.format(', '.join(list(self.to_list())))
+        values = self.to_list()
+        values = map(str, values)
+        return '<BinaryTree [%s]>' % ', '.join(values)
 
     def __str__(self):
         return repr(self)
@@ -111,30 +113,3 @@ class BinaryTree:
                 leaves[length] = node
                 length += 1
         return root
-
-
-class Traversal:
-    @staticmethod
-    def Morris(root):
-        '''
-            depth first traversal
-            credit: https://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/
-        '''
-        current = root
-
-        while(current is not None):
-            if current.left is None:
-                yield current
-                current = current.right
-            else:
-                pre = current.left
-                while(pre.right is not None and pre.right != current):
-                    pre = pre.right
-
-                if(pre.right is None):
-                    pre.right = current
-                    current = current.left
-                else:
-                    pre.right = None
-                    yield current
-                    current = curre

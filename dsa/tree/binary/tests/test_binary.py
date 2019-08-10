@@ -1,5 +1,5 @@
 from unittest import TestCase
-from ..binary import BinaryTree as BT
+from .. import BinaryTree as BT
 
 
 class TestBinaryTree(TestCase):
@@ -29,6 +29,46 @@ class TestBinaryTree(TestCase):
         four.right = six
         five.left = seven
 
+        self.assertEqual(tree, one)
+        self.assertEqual(array, list(tree.to_list()))
+        self.assertEqual(array, list(one.to_list()))
+
+    def test_from_list3(self):
+        array = [0, 0, 0, None, None, 0, 0, None, None, 0]
+        tree = BT.from_list(array)
+        one = BT(0)
+        two = BT(0)
+        three = BT(0)
+        four = BT(0)
+        five = BT(0)
+        six = BT(0)
+
+        one.left = two
+        one.right = three
+        three.left = four
+        three.right = five
+        five.left = six
+        self.assertEqual(tree, one)
+        self.assertEqual(array, list(tree.to_list()))
+        self.assertEqual(array, list(one.to_list()))
+
+    def test_from_list4(self):
+        array = [1, 2, 3, 4, 5, 6, 7]
+        tree = BT.from_list(array)
+        one = BT(1)
+        two = BT(2)
+        three = BT(3)
+        four = BT(4)
+        five = BT(5)
+        six = BT(6)
+        seven = BT(7)
+
+        one.left = two
+        one.right = three
+        two.left = four
+        two.right = five
+        three.left = six
+        three.right = seven
         self.assertEqual(tree, one)
         self.assertEqual(array, list(tree.to_list()))
         self.assertEqual(array, list(one.to_list()))
