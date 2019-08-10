@@ -12,10 +12,11 @@ def decision(node, left: Result, right: Result):
     count = left.count + right.count
 
     if left.is_monitored and right.is_monitored:
+        is_monitored = left.has_camera or right.has_camera
         return Result(
-            is_monitored=left.has_camera or right.has_camera,
+            is_monitored=is_monitored,
             has_camera=False,
-            count=count
+            count=count if is_monitored else count + 1
         )
     else:
         return Result(is_monitored=True, has_camera=True, count=count + 1)

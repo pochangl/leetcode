@@ -34,7 +34,7 @@ class TestSteps(TestCase):
         expect = 1
         self.run_test(data, expect)
 
-    def test_straight_line(self):
+    def test_straight_lines(self):
         '''
             測直線結構
         '''
