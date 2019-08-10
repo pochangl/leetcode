@@ -40,7 +40,7 @@ class TestSteps(TestCase):
         '''
         base = [0, None]
         lengthes = [1, 2, 3, 4, 5, 6, 7]
-        expects =  [1, 2, 1, 2, 2, 2, 3]
+        expects =  [1, 1, 1, 2, 2, 2, 3]
 
         for length, expect in zip(lengthes, expects):
             data = base * length
