@@ -14,7 +14,7 @@ class TestSteps(TestCase):
         '''
             題目的case
         '''
-        data = [0, 0, None, None, 0, 0]
+        data = [0, 0, None, 0, 0]
         expect = 1
         self.run_test(data, expect)
 
