@@ -11,11 +11,17 @@ class TestSteps(TestCase):
         self.assertEqual(result, expect)
 
     def test_case1(self):
+        '''
+            題目的case
+        '''
         data = [0, 0, None, None, 0, 0]
         expect = 1
         self.run_test(data, expect)
 
     def test_case2(self):
+        '''
+            題目的case
+        '''
         data = [0, 0, None, 0, None, 0, None, None, 0]
         expect = 2
         self.run_test(data, expect)
