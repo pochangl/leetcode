@@ -66,8 +66,8 @@ class TestSteps(TestCase):
             self.run_test(data, 1)
 
     def test_full(self):
-        levels =  [1, 2, 3, 4, 5]
-        expects = [1, 1, 3, 5, 10]
+        levels =  [1, 2, 3, 4, 5, 6]
+        expects = [1, 1, 2, 5, 9, 18]
         for level, expect in zip(levels, expects):
             data = [0] * (2**level - 1)
             self.run_test(data, expect)
