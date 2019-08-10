@@ -12,11 +12,10 @@ def decision(node, left: Result, right: Result):
     count = left.count + right.count
 
     if left.is_monitored and right.is_monitored:
-        is_monitored = left.has_camera or right.has_camera
         return Result(
-            is_monitored=is_monitored,
+            is_monitored=left.has_camera or right.has_camera,
             has_camera=False,
-            count=count if is_monitored else count + 1
+            count=count
         )
     else:
         return Result(is_monitored=True, has_camera=True, count=count + 1)
@@ -25,4 +24,5 @@ def decision(node, left: Result, right: Result):
 class Solution:
     def minCameraCover(self, root) -> int:
         count = recursion(decision)
-        return count(root).count
+        result = count(root)
+        return result.count if result.is_monitored else result.count + 1
