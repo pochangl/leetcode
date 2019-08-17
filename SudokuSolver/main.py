@@ -43,7 +43,9 @@ class Solution:
         # initial cells
         for x, y in axis:
             cell = cells[x][y] = Cell(x, y, board[x][y])
+
             if cell.value != '.':
+                # 加入resolved
                 resolved.add(cell)
 
         # initial observers
@@ -62,11 +64,6 @@ class Solution:
             for dx, dy in deltas:
                 # subscribe to local block
                 cell.subscribe_to(cells[base_x + dx][base_y + dy])
-
-        # initial candidates
-        for row in cells.values():
-            for cell in row.values():
-                resolved.add(cell)
 
         assert len(resolved) == 30, 'length: {}'.format(len(resolved))
         while resolved:
