@@ -68,6 +68,7 @@ class Solution:
             for cell in row.values():
                 resolved.add(cell)
 
+        assert len(resolved) == 30, 'length: {}'.format(len(resolved))
         while resolved:
             cell = resolved.pop()
             board[cell.x][cell.y] = str(cell.value)
