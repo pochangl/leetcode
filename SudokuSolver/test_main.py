@@ -210,7 +210,7 @@ class TestSolution(TestCase):
         '''
             有點難.
             第一個困難點在於所有格子都有 2 種以上的可能性
-            唯一一個有2種可能性的格子在最右下角 4 的上面那格, 也就是 data[6][7] 的位置
+            唯一一個有2種可能性的格子在最右下角 4 的上面那格, 也就是 data[7][6] 的位置
                 這格答案是 9, 理由是因為如果是 3 的話, 9 就沒位置放了
         '''
         data = [
@@ -225,4 +225,4 @@ class TestSolution(TestCase):
             ['.', '9', '.', '.', '.', '.', '4', '.', '.'],
         ]
         Solution().solveSudoku(data)
-        self.assertEqual(data[6][7], 9)
+        self.assertEqual(data[7][6], 9)
