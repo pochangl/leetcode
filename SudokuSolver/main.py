@@ -62,8 +62,8 @@ class Solution:
                 cell.subscribe_to(cells[base_x + dx][base_y + dy])
 
         # initial candidates
-        for row in cells:
-            for cell in row:
+        for row in cells.values():
+            for cell in row.values():
                 resolved.add(cell)
 
         while resolved:
