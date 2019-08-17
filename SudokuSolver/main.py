@@ -42,7 +42,9 @@ class Solution:
 
         # initial cells
         for x, y in axis:
-            cells[x][y] = Cell(x, y, board[x][y])
+            cell = cells[x][y] = Cell(x, y, board[x][y])
+            if cell.value != '.':
+                resolved.add(cell)
 
         # initial observers
         for x, y in axis:
