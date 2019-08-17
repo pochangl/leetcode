@@ -38,10 +38,9 @@ class Solution:
         cells = defaultdict(factory)
 
         resolved = set()
-        axis = product(range(9), repeat=2)
 
         # initial cells
-        for x, y in axis:
+        for x, y in product(range(9), repeat=2):
             cell = cells[x][y] = Cell(x, y, board[x][y])
 
             if cell.value != '.':
@@ -49,7 +48,7 @@ class Solution:
                 resolved.add(cell)
 
         # initial observers
-        for x, y in axis:
+        for x, y in product(range(9), repeat=2):
             cell = cells[x][y]
             for index in range(9):
                 # subscribe to x axis cells
