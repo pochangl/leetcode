@@ -23,7 +23,8 @@ class Cell:
         '''
             self subscribe to cell
         '''
-        cell.observers.add(self)
+        if self != cell:
+            cell.observers.add(self)
 
 
 class Solution:
