@@ -1,4 +1,5 @@
 from collections import defaultdict
+from itertools import permutations
 
 
 class Cell:
@@ -36,16 +37,15 @@ class Solution:
         cells = defaultdict(factory)
 
         resolved = set()
+        axis = permutations(range(9), 2)
 
         # initial cells
-        for x in range(9):
-            for y in range(9):
-                cells[x][y] = Cell(x, y, board[x][y])
+        for x, y in axis:
+            cells[x][y] = Cell(x, y, board[x][y])
 
         # initial observers
-        for x in range(9):
-            for y in range(9):
-                pass  # 還不知道要寫什麼
+        for x, y in range(9):
+            pass  # 還不知道要寫什麼
 
         # initial candidates
         for row in cells:
