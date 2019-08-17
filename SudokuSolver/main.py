@@ -2,11 +2,22 @@ from collections import defaultdict
 from itertools import product
 
 
+class Coordinate:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __hash__(self):
+        return self.x * 9 + self.y
+
+    def __eq__(self, coordinate):
+        return hash(self) == hash(coordinate)
+
+
 class Cell:
     def __init__(self, x, y, value):
         self.value = value
-        self.x = x
-        self.y = y
+        self.coordinate = Coordinate(x, y)
         self.observers = set()
 
         if value == '.':
@@ -17,7 +28,7 @@ class Cell:
             self.availables = set([value])
 
     def __hash__(self):
-        return self.x * 9 + self.y
+        return hash(self.coordinate)
 
     def __eq__(self, cell):
         return hash(self) == hash(cell)
@@ -27,7 +38,15 @@ class Cell:
             self subscribe to cell
         '''
         if self != cell:
-            cell.observers.add(self)
+            cell.observers.add(self.coordinate)
+
+    @property
+    def x(self):
+        return self.coordinate.x
+
+    @property
+    def y(self):
+        return self.coordinate.y
 
 
 class Solution:
@@ -70,7 +89,8 @@ class Solution:
             cell = resolved.pop()
             board[cell.x][cell.y] = str(cell.value)
 
-            for observer in cell.observers:
+            for coordinate in cell.observers:
+                observer = cells[coordinate.x][coordinate.y]
                 if cell.value in observer.availables:
                     observer.availables.remove(cell.value)
                     if len(observer.availables) == 1:
@@ -78,7 +98,6 @@ class Solution:
                         resolved.add(observer)
 
             cell.observers = None
-
 
         counts = []
         for x in range(9):
