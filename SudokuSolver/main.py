@@ -1,3 +1,4 @@
+from copy import deepcopy
 from collections import defaultdict
 from itertools import product
 
@@ -49,6 +50,29 @@ class Cell:
         return self.coordinate.y
 
 
+def solve(cells, board, resolved):
+    cells, board, resolved = (
+        deepcopy(cells),
+        deepcopy(board),
+        deepcopy(resolved),
+    )
+
+    while resolved:
+        cell = resolved.pop()
+        board[cell.x][cell.y] = str(cell.value)
+
+        for coordinate in cell.observers:
+            observer = cells[coordinate.x][coordinate.y]
+            if cell.value in observer.availables:
+                observer.availables.remove(cell.value)
+                if len(observer.availables) == 1:
+                    observer.value = observer.availables.pop()
+                    resolved.add(observer)
+
+        cell.observers = None
+    return board
+
+
 class Solution:
     def solveSudoku(self, board):
         """
@@ -85,20 +109,12 @@ class Solution:
                 # subscribe to local block
                 cell.subscribe_to(cells[base_x + dx][base_y + dy])
 
-        while resolved:
-            cell = resolved.pop()
-            board[cell.x][cell.y] = str(cell.value)
+        new_board = solve(cells=cells, board=board, resolved=resolved)
 
-            for coordinate in cell.observers:
-                observer = cells[coordinate.x][coordinate.y]
-                if cell.value in observer.availables:
-                    observer.availables.remove(cell.value)
-                    if len(observer.availables) == 1:
-                        observer.value = observer.availables.pop()
-                        resolved.add(observer)
+        for index in range(9):
+            board[index] = new_board[index]
 
-            cell.observers = None
-
+        '''
         counts = []
         for x in range(9):
             counts.append([None] * 9)
@@ -107,3 +123,4 @@ class Solution:
         print()
         for row in counts:
             print(row)
+        '''
