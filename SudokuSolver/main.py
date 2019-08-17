@@ -85,4 +85,6 @@ class Solution:
             counts.append([None] * 9)
             for y in range(9):
                 counts[x][y] = len(cells[x][y].availables)
-        print(counts)
+        print()
+        for row in counts:
+            print(row)
