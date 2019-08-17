@@ -1,5 +1,5 @@
 from collections import defaultdict
-from itertools import permutations
+from itertools import product
 
 
 class Cell:
@@ -38,7 +38,7 @@ class Solution:
         cells = defaultdict(factory)
 
         resolved = set()
-        axis = permutations(range(9), 2)
+        axis = product(range(9), repeat=2)
 
         # initial cells
         for x, y in axis:
@@ -57,7 +57,7 @@ class Solution:
                 # subscribe to y axis cells
                 cell.subscribe_to(cells[index][y])
 
-            deltas = permutations(range(3), 2)
+            deltas = product(range(3), repeat=2)
             base_x = x % 3
             base_y = y % 3
 
@@ -65,7 +65,6 @@ class Solution:
                 # subscribe to local block
                 cell.subscribe_to(cells[base_x + dx][base_y + dy])
 
-        assert len(resolved) == 30, 'length: {}'.format(len(resolved))
         while resolved:
             cell = resolved.pop()
             board[cell.x][cell.y] = str(cell.value)
