@@ -5,10 +5,19 @@ from .main import Solution
 
 
 class TestSolution(TestCase):
+    def count_filled(self, board):
+        count = 0
+        for x, y in product(range(9), repeat=2):
+            if board[x][y] != '.':
+                count += 1
+        return count
+
     def check_board(self, initial, board):
+        num_filled = self.count_filled(board)
+        self.assertEqual(num_filled, 81)
+
         for x, y in product(range(9), repeat=2):
             value = board[x][y]
-            self.assertNotEqual(value, '.')
 
             # 檢查axis
             for index in range(9):
@@ -205,6 +214,27 @@ class TestSolution(TestCase):
                 self.assertNotEqual(column, '.', data)
 
         self.checkboard(initial=initial, board=data)
+
+    def test_case_hardest_step1(self):
+        '''
+            source: https://www.conceptispuzzles.com/index.aspx?uri=info/article/424
+        '''
+        data = [
+            ['8', '.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '3', '6', '.', '.', '.', '.', '.'],
+            ['.', '7', '.', '.', '9', '.', '2', '.', '.'],
+            ['.', '5', '.', '.', '.', '7', '.', '.', '.'],
+            ['.', '.', '.', '.', '4', '5', '7', '.', '.'],
+            ['.', '.', '.', '1', '.', '.', '.', '3', '.'],
+            ['.', '.', '1', '.', '.', '.', '.', '6', '8'],
+            ['.', '.', '8', '5', '.', '.', '9', '1', '.'],
+            ['.', '9', '.', '.', '.', '.', '4', '.', '.'],
+        ]
+        initial = copy.deepcopy(data)
+        Solution().solveSudoku(data)
+
+        count = self.count_filled(data)
+        self.assertEqual(count, 22)
 
     def test_case_hardest_local1(self):
         '''
