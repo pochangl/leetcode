@@ -8,9 +8,12 @@ class Cell:
         self.x = x
         self.y = y
         self.observers = set()
+
         if value == '.':
-            self.availables = set(range(9))
+            self.value = value
+            self.availables = set(range(1, 10))
         else:
+            self.value = int(value)
             self.availables = set([value])
 
     def __hash__(self):
