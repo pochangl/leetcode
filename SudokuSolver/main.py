@@ -60,9 +60,8 @@ class Solution:
                 cell.subscribe_to(cells[index][y])
 
             deltas = product(range(3), repeat=2)
-            base_x = x % 3
-            base_y = y % 3
-
+            base_x = (x // 3) * 3
+            base_y = (y // 3) * 3
             for dx, dy in deltas:
                 # subscribe to local block
                 cell.subscribe_to(cells[base_x + dx][base_y + dy])
