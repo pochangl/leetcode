@@ -1,13 +1,41 @@
 import copy
+from itertools import product
 from unittest import TestCase
 from .main import Solution
 
 
 class TestSolution(TestCase):
-    def run_test(self, data, expect):
-        data = copy.deepcopy(data)
+    def check_board(self, initial, board):
+        for x, y in product(range(9), repeat=2):
+            value = board[x][y]
+            self.assertNotEqual(value, '.')
+
+            # 檢查axis
+            for index in range(9):
+                if index != x:
+                    self.assertNotEqual(board[index][y], value)
+                if index != y:
+                    self.assertNotEqual(board[x][index], value)
+
+            # 檢查 block
+            base_x = (x // 3) * 3
+            base_y = (y // 3) * 3
+            for dx, dy in product(range(3), repeat=2):
+                target_x = base_x + dx
+                target_y = base_y + dy
+                if x != target_x or y != target_y:
+                    self.assertNotEqual(board[target_x][target_y], value)
+
+            for row1, row2 in zip(initial, board):
+                for init, value in zip(row1, row2):
+                    if init != '.':
+                        self.assertEqual(init, value)
+
+    def run_test(self, initial, expect):
+        data = copy.deepcopy(initial)
         Solution().solveSudoku(data)
         self.assertEqual(data, expect)
+        self.check_board(initial=initial, board=data)
 
     def test_case(self):
         '''
@@ -108,8 +136,10 @@ class TestSolution(TestCase):
             ['.', '.', '8', '5', '.', '.', '.', '1', '.'],
             ['.', '9', '.', '.', '.', '.', '4', '.', '.'],
         ]
-
+        initial = copy.deepcopy(data)
         Solution().solveSudoku(data)
         for row in data:
             for column in row:
-                self.assertNotEqual(column, '.')
+                self.assertNotEqual(column, '.', data)
+
+        self.checkboard(initial=initial, board=data)
