@@ -1,6 +1,11 @@
+from contextlib import suppress
 from copy import deepcopy
 from collections import defaultdict
 from itertools import product
+
+
+class Conflict(ValueError):
+    pass
 
 
 class Coordinate:
@@ -14,10 +19,15 @@ class Coordinate:
     def __eq__(self, coordinate):
         return hash(self) == hash(coordinate)
 
+    def __str__(self):
+        return '<coor x={} y={}>'.format(self.x, self.y)
+
+    def __repr__(self):
+        return str(self)
+
 
 class Cell:
     def __init__(self, x, y, value):
-        self.value = value
         self.coordinate = Coordinate(x, y)
         self.observers = set()
 
@@ -26,7 +36,7 @@ class Cell:
             self.availables = set(range(1, 10))
         else:
             self.value = int(value)
-            self.availables = set([value])
+            self.availables = set([self.value])
 
     def __hash__(self):
         return hash(self.coordinate)
@@ -41,6 +51,12 @@ class Cell:
         if self != cell:
             cell.observers.add(self.coordinate)
 
+    def __str__(self):
+        return '<x={} y={} val={} avail={}>'.format(self.x, self.y, self.value, self.availables)
+
+    def __repr__(self):
+        return str(self)
+
     @property
     def x(self):
         return self.coordinate.x
@@ -50,26 +66,59 @@ class Cell:
         return self.coordinate.y
 
 
-def solve(cells, board, resolved):
-    cells, board, resolved = (
-        deepcopy(cells),
-        deepcopy(board),
-        deepcopy(resolved),
+def print_board(board):
+    print('-------')
+    for row in board:
+        print(row)
+
+
+def solve(cells, board, resolved, almost, num_resolved):
+    cells, board, resolved, almost = map(
+        deepcopy,
+        (cells, board, resolved, almost),
     )
 
     while resolved:
+        num_resolved += 1
         cell = resolved.pop()
+        try:
+            cell.value = cell.availables.pop()
+        except KeyError:
+            raise Conflict()
+
         board[cell.x][cell.y] = str(cell.value)
 
-        for coordinate in cell.observers:
+        for coordinate in tuple(cell.observers):
             observer = cells[coordinate.x][coordinate.y]
-            if cell.value in observer.availables:
-                observer.availables.remove(cell.value)
-                if len(observer.availables) == 1:
-                    observer.value = observer.availables.pop()
-                    resolved.add(observer)
+            if cell.value not in observer.availables:
+                cell.observers.remove(coordinate)
+                continue
 
-        cell.observers = None
+            observer.availables.remove(cell.value)
+            if len(observer.availables) == 1:
+                resolved.add(observer)
+                almost.remove(observer)
+            elif len(observer.availables) == 2:
+                almost.add(observer)
+
+        if not resolved and almost:
+            attempt = almost.pop()
+            attempt = cells[attempt.x][attempt.y]
+
+            for value in attempt.availables:
+                attempt.value = value
+                attempt.availables = set([value])
+                resolved.add(attempt)
+                with suppress(Conflict):
+                    return solve(
+                        cells=cells,
+                        board=board,
+                        resolved=resolved,
+                        almost=almost,
+                        num_resolved=num_resolved
+                    )
+            raise Conflict()
+
     return board
 
 
@@ -109,12 +158,13 @@ class Solution:
                 # subscribe to local block
                 cell.subscribe_to(cells[base_x + dx][base_y + dy])
 
-        new_board = solve(cells=cells, board=board, resolved=resolved)
+        new_board = solve(cells=cells, board=board, resolved=resolved, num_resolved=0, almost=set())
 
         for index in range(9):
             board[index] = new_board[index]
 
         '''
+        print_board(board)
         counts = []
         for x in range(9):
             counts.append([None] * 9)
