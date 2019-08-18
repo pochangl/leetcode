@@ -70,12 +70,6 @@ class Cell:
         return self.value != '.'
 
 
-def print_board(board):
-    print('-------')
-    for row in board:
-        print(row)
-
-
 count = 0
 
 
@@ -178,6 +172,13 @@ class Solution:
             board[index] = new_board[index]
 
         '''
+
+
+        def print_board(board):
+            print('-------')
+            for row in board:
+                print(row)
+
         print_board(board)
         counts = []
         for x in range(9):
