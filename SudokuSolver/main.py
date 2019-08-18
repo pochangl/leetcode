@@ -85,10 +85,8 @@ def solve(cells, board, resolved, almost, num_resolved):
     while resolved:
         num_resolved += 1
         cell = resolved.pop()
-        try:
-            cell.value = cell.availables.pop()
-        except KeyError:
-            raise Conflict()
+
+        cell.value = cell.availables.pop()
 
         board[cell.x][cell.y] = str(cell.value)
 
@@ -99,11 +97,14 @@ def solve(cells, board, resolved, almost, num_resolved):
                 continue
 
             observer.availables.remove(cell.value)
-            if len(observer.availables) == 1:
+            length = len(observer.availables)
+            if length == 1:
                 resolved.add(observer)
                 almost.remove(observer)
-            elif len(observer.availables) == 2:
+            elif length == 2:
                 almost.add(observer)
+            elif length == 0:
+                raise Conflict()
 
         if not resolved and almost:
             attempt = almost.pop()
