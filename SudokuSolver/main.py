@@ -70,13 +70,7 @@ class Cell:
         return self.value != '.'
 
 
-count = 0
-
-
 def solve(cells, board, resolved, almost, num_resolved):
-    global count
-    count += 1
-    print(count)
     cells, board, resolved, almost = map(
         deepcopy,
         (cells, board, resolved, almost),
@@ -106,23 +100,24 @@ def solve(cells, board, resolved, almost, num_resolved):
             elif length == 0:
                 raise Conflict()
 
-        if not resolved and almost:
-            attempt = almost.pop()
-            attempt = cells[attempt.x][attempt.y]
+        cell.observers = None
+    if almost:
+        attempt = almost.pop()
+        attempt = cells[attempt.x][attempt.y]
 
-            for value in attempt.availables:
-                attempt.value = value
-                attempt.availables = set([value])
-                resolved.add(attempt)
-                with suppress(Conflict):
-                    return solve(
-                        cells=cells,
-                        board=board,
-                        resolved=resolved,
-                        almost=almost,
-                        num_resolved=num_resolved
-                    )
-            raise Conflict()
+        for value in attempt.availables:
+            attempt.value = value
+            attempt.availables = set([value])
+            resolved.add(attempt)
+            with suppress(Conflict):
+                return solve(
+                    cells=cells,
+                    board=board,
+                    resolved=resolved,
+                    almost=almost,
+                    num_resolved=num_resolved
+                )
+        raise Conflict()
 
     return board
 
