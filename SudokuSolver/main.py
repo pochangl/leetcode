@@ -108,12 +108,11 @@ def solve(cells, board, resolved, almost, num_resolved):
         for value in attempt.availables:
             attempt.value = value
             attempt.availables = set([value])
-            resolved.add(attempt)
             with suppress(Conflict):
                 return solve(
                     cells=cells,
                     board=board,
-                    resolved=resolved,
+                    resolved=set([attempt]),
                     almost=almost,
                     num_resolved=num_resolved
                 )
