@@ -76,7 +76,13 @@ def print_board(board):
         print(row)
 
 
+count = 0
+
+
 def solve(cells, board, resolved, almost, num_resolved):
+    global count
+    count += 1
+    print(count)
     cells, board, resolved, almost = map(
         deepcopy,
         (cells, board, resolved, almost),
