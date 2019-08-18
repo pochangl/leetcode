@@ -19,12 +19,6 @@ class Coordinate:
     def __eq__(self, coordinate):
         return hash(self) == hash(coordinate)
 
-    def __str__(self):
-        return '<coor x={} y={}>'.format(self.x, self.y)
-
-    def __repr__(self):
-        return str(self)
-
 
 class Cell:
     def __init__(self, x, y, value):
@@ -50,12 +44,6 @@ class Cell:
         '''
         if self != cell:
             cell.observers.add(self.coordinate)
-
-    def __str__(self):
-        return '<x={} y={} val={} avail={}>'.format(self.x, self.y, self.value, self.availables)
-
-    def __repr__(self):
-        return str(self)
 
     @property
     def x(self):
