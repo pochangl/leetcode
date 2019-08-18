@@ -65,6 +65,10 @@ class Cell:
     def y(self):
         return self.coordinate.y
 
+    @property
+    def is_filled(self):
+        return self.value != '.'
+
 
 def print_board(board):
     print('-------')
@@ -145,6 +149,9 @@ class Solution:
         # initial observers
         for x, y in product(range(9), repeat=2):
             cell = cells[x][y]
+            if cell.is_filled:
+                continue
+
             for index in range(9):
                 # subscribe to x axis cells
                 cell.subscribe_to(cells[x][index])
