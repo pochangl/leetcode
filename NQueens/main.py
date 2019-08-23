@@ -1,4 +1,7 @@
 from collections import namedtuple
+from contextlib import ExitStack
+from utils.recursion import stack, unstack
+
 
 Queen = namedtuple('Queen', ('x', 'y'))
 
@@ -28,17 +31,15 @@ def solve(n, queens, availables):
     for y in tuple(availables):
         queen = Queen(x, y)
         if all(compatible(queen, q) for q in queens):
-            queens.add(queen)
+            with ExitStack() as es:
+                es.enter_context(stack(queens, queen))
+                es.enter_context(unstack(availables, y))
 
-            if len(queens) == n:
-                yield render(queens)
-                queens.remove(queen)
-                return
-            else:
-                availables.remove(y)
-                yield from solve(n, queens, availables)
-                availables.add(y)
-                queens.remove(queen)
+                if len(queens) == n:
+                    yield render(queens)
+                    return
+                else:
+                    yield from solve(n, queens, availables)
 
 
 def solve_all(n):
