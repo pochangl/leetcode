@@ -1,6 +1,7 @@
 from unittest import TestCase
 from .sat_solver import SatSolver
 from .main import Solution
+from utils.matrix import print_matrix
 
 
 class TestSolution(TestCase):
@@ -11,15 +12,14 @@ class TestSolution(TestCase):
         self.assertEqual(solution1, solution2)
 
     def run_test(self, data, expect=None):
-        sat_solution = SatSolver().solveNQueens(data)
         solution = Solution().solveNQueens(data)
+        sat_solution = SatSolver().solveNQueens(data)
         self.assertSolutionEqual(solution, sat_solution)
         if expect is not None:
             self.assertEqual(solution, expect)
 
     def test_case(self):
-        self.run_test(5)
-        for i in range(4, 10):
+        for i in range(4, 12):
             self.run_test(i)
 
     def test_case_edge(self):
