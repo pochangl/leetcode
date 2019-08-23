@@ -19,7 +19,7 @@ class TestSolution(TestCase):
             self.assertEqual(solution, expect)
 
     def test_case(self):
-        for i in range(4, 12):
+        for i in range(4, 10):
             self.run_test(i)
 
     def test_case_edge(self):
