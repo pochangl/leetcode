@@ -52,7 +52,8 @@ def solve_all(symcnf, include_neg=False):
 def solve_one(symcnf, include_neg=False):
     return next(itersolve(symcnf, include_neg))
 
-############### Support for Building CNFs ##########################
+
+# ############## Support for Building CNFs ##########################
 
 
 @lru_cache(maxsize=None)
@@ -91,7 +92,7 @@ class Q:
         return self < n + 1
 
     def __gt__(self, n: int) -> 'cnf':
-        return list(combinations(self.elements, len(self.elements)-n))
+        return list(combinations(self.elements, len(self.elements) - n))
 
     def __ge__(self, n: int) -> 'cnf':
         return self > n - 1
@@ -129,3 +130,8 @@ def basic_fact(element) -> 'cnf':
 def none_of(elements) -> 'cnf':
     'Forces exclusion of matching rows on a truth table'
     return Q(elements) == 0
+
+
+def imply(P, Q) -> 'cnf':
+    'Implication P => Q'
+    return [neg(P), Q]
