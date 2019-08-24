@@ -4,11 +4,6 @@ from utils import sat
 from utils.line import get_points
 
 
-def all_or_none(*points):
-    q = sat.Q(points)
-    return (q == 0) + (q == len(2))
-
-
 @lru_cache(maxsize=1000)
 def Point(x, y):
     return '{} {}'.format(x, y)
