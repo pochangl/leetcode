@@ -6,10 +6,24 @@ from utils.line import get_points
 
 @lru_cache(maxsize=1000)
 def Point(x, y):
+    '''
+        descriptions:
+            把 x, y 轉成 SAT 用的字串
+        example:
+            >>> Point(1, 2)
+            '1 2'
+    '''
     return '{} {}'.format(x, y)
 
 
 def str_to_xy(value):
+    '''
+        descriptions:
+            把字串轉成 (x, y)
+        example:
+            >>> str_to_xy('1 2')
+            (1, 2)
+    '''
     x, y = value.split(' ')
     return int(x), int(y)
 
@@ -59,6 +73,13 @@ def get_cnf(width, height):
 
 
 def all_pathes(width, height):
+    '''
+        description:
+            計算所有的路徑
+        example:
+            >>> tuple(all_pathes(2, 2))
+            ([(0, 0), (0, 1), (1, 1)], [(0, 0), (1, 0), (1, 1)])
+    '''
     cnf = get_cnf(width, height)
     solutions = sat.solve_all(cnf)
     for solution in solutions:
@@ -69,7 +90,17 @@ def all_pathes(width, height):
 
 def required_health(dungeon, path):
     '''
+        description:
+            計算一個路徑需要的最小 HP 值
+        example:
+            >>> required_health([[-2, -3, 3], [-5, -10, 1], [10, 30, -5]], [(0, 0), (0, 1), (0, 2), (1, 2), (2, 2)])
+            7
 
+            >>> required_health([[-1, -2], [-3, -4]], [(0, 0), (0, 1), (1, 1)])
+            8
+
+            >>> required_health([[-1]], [(0, 0)])
+            2
     '''
     minimum = 0
     health = 0

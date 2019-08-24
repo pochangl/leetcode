@@ -59,10 +59,46 @@ class TestSolver(TestCase):
         answer = SatSolver().calculateMinimumHP(board)
         self.assertEqual(answer, expect)
 
-    def test_case(self):
+    def test_case1(self):
         data = [
             [-2, -3, 3],
             [-5, -10, 1],
-            [10, 30, -5]]
+            [10, 30, -5],
+        ]
         expect = 7
+        self.run_test(data, expect)
+
+    def test_case2(self):
+        '''
+            避免選到需要額外HP的路徑
+        '''
+        data = [
+            [0, -1, 10, 10],
+            [0, -1, 10, 10],
+            [0, -1, 10, 10],
+            [2, -1, 0, 0],
+        ]
+        expect = 1
+        self.run_test(data, expect)
+
+    def test_case3(self):
+        '''
+            至少要 hp 1
+        '''
+        data = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ]
+        expect = 1
+        self.run_test(data, expect)
+
+    def test_case4(self):
+        '''
+            確認 edge case
+        '''
+        data = [
+            [0]
+        ]
+        expect = 1
         self.run_test(data, expect)
