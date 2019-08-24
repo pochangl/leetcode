@@ -47,7 +47,7 @@ def get_cnf(width, height):
 
     for x, y in product(range(1, width), range(1, height)):
         '''
-            點 => 左 or 右
+            點 => 左 or 上
             如果這個點
         '''
         up = Point(x - 1, y)
