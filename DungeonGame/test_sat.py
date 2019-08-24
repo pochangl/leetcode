@@ -52,3 +52,17 @@ class TestPathes(TestCase):
             n = width - 1
             self.run_test(width, width, factorial(
                 n * 2) // factorial(n) ** 2)
+
+
+class TestSolver(TestCase):
+    def run_test(self, board, expect):
+        answer = SatSolver().calculateMinimumHP(board)
+        self.assertEqual(answer, expect)
+
+    def test_case(self):
+        data = [
+            [-2, -3, 3],
+            [-5, -10, 1],
+            [10, 30, -5]]
+        expect = 7
+        self.run_test(data, expect)

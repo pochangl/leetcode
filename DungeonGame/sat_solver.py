@@ -1,4 +1,4 @@
-from functools import lru_cache
+from functools import lru_cache, reduce
 from itertools import product
 from utils import sat
 from utils.line import get_points
@@ -67,7 +67,25 @@ def all_pathes(width, height):
         yield path
 
 
+def required_health(dungeon, path):
+    '''
+
+    '''
+    minimum = 0
+    health = 0
+    for x, y in path:
+        health += dungeon[x][y]
+        minimum = min((health, minimum))
+
+    return 1 - minimum
+
+
 class SatSolver:
     def calculateMinimumHP(self, dungeon) -> int:
         pathes = all_pathes(len(dungeon), len(dungeon[0]))
-        return 1
+        return min(required_health(dungeon, path) for path in pathes)
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
