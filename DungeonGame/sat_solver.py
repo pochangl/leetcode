@@ -21,6 +21,10 @@ def str_to_xy(value):
 
 def get_cnf(width, height):
     cnf = []
+
+    cnf += sat.basic_fact(Point(0, 0))
+    cnf += sat.basic_fact(Point(width - 1, height - 1))
+
     # edge case: 上邊, 一定是左邊來的 右 => 左
     y = 0
     for x in range(1, width):
