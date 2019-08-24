@@ -22,3 +22,12 @@ class TestPathes(TestCase):
 
     def test_case3(self):
         self.run_test(3, 3, 6)
+
+    def test_case_range(self):
+        '''
+            長度等於binomial coefficient
+        '''
+        for width in range(1, 7):
+            n = width - 1
+            self.run_test(width, width, factorial(
+                n * 2) // factorial(n) ** 2)
