@@ -35,7 +35,6 @@ def all_board(size):
                 yield board
             else:
                 yield from recursion(index + 1)
-
             value += 1
 
     yield from recursion(0)

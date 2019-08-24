@@ -8,12 +8,14 @@ class Solution:
             if (x, y) == goal:
                 return dungeon[x][y]
             elif x == goal[x]:
-                return minimal_damage(x, y + 1)
+                value = minimal_damage(x, y + 1)
             elif y == goal[y]:
-                return minimal_damage(x + 1, y)
-            return max(
-                minimal_damage(x, y + 1),
-                minimal_damage(x + 1, y)
-            )
+                value = minimal_damage(x + 1, y)
+            else:
+                value = max(
+                    minimal_damage(x, y + 1),
+                    minimal_damage(x + 1, y)
+                )
+            return dungeon[x][y] + value
 
         return max([1, 1 - minimal_damage(0, 0)])
