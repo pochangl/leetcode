@@ -55,7 +55,7 @@ def get_cnf(width, height):
         point = Point(x, y)
         cnf.append((sat.neg(point), left, up))
 
-    for offset in range(max(width, height)):
+    for offset in range(width + height - 1):
         '每個線上 y = -x + b 只能有一個點'
         cnf += sat.one_of(Point(x, y)
                           for x, y in get_points(width, height, -1, offset))
@@ -67,7 +67,6 @@ def all_pathes(width, height):
     cnf = get_cnf(width, height)
     solutions = sat.solve_all(cnf)
     for solution in solutions:
-        print(tuple(map(str_to_xy, solution)))
         yield map(str_to_xy, solution)
 
 

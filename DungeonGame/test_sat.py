@@ -1,13 +1,17 @@
+
 import numpy as np
+from math import factorial
 from unittest import TestCase
 from .sat_solver import SatSolver, all_pathes
 
 
 class TestPathes(TestCase):
-
     def run_test(self, width, height, length):
         pathes = all_pathes(width=width, height=height)
         pathes = tuple(pathes)
+        for path in pathes:
+            path = list(path)
+            self.assertEqual(len(path), width + height - 1, path)
         self.assertEqual(len(pathes), length)
 
     def test_case1(self):
