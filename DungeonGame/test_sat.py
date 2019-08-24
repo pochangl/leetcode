@@ -1,17 +1,38 @@
 
 import numpy as np
+from functools import reduce
 from math import factorial
 from unittest import TestCase
 from .sat_solver import SatSolver, all_pathes
 
 
 class TestPathes(TestCase):
+    def assertPath(self, path, width, height):
+        initial = path[0]
+        goal = path[-1]
+
+        # check initial position and goal
+        self.assertEqual(initial, (0, 0))
+        self.assertEqual(goal, (width - 1, height - 1))
+
+        # check length
+        self.assertEqual(len(path), width + height - 1, path)
+
+        def reducer(prev, current):
+            if prev is None:
+                return None
+            if abs(prev[0] - current[0]) + abs(prev[1] - current[1]) == 1:
+                return current
+            return None
+
+        end = reduce(reducer, path[1:], initial)
+        self.assertEqual(end, goal)
+
     def run_test(self, width, height, length):
         pathes = all_pathes(width=width, height=height)
         pathes = tuple(pathes)
         for path in pathes:
-            path = list(path)
-            self.assertEqual(len(path), width + height - 1, path)
+            self.assertPath(path=path, width=width, height=height)
         self.assertEqual(len(pathes), length)
 
     def test_case1(self):

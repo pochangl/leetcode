@@ -62,7 +62,9 @@ def all_pathes(width, height):
     cnf = get_cnf(width, height)
     solutions = sat.solve_all(cnf)
     for solution in solutions:
-        yield map(str_to_xy, solution)
+        path = list(map(str_to_xy, solution))
+        path.sort(key=lambda x: x[0] * height + x[1])
+        yield path
 
 
 class SatSolver:
