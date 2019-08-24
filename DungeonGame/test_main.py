@@ -49,5 +49,5 @@ class TestSolution(TestCase):
                 self.assertEqual(result, answer, board)
 
     def test_performance(self):
-        board = next(all_board(11))
+        board = next(all_board(30))
         Solution().calculateMinimumHP(board)

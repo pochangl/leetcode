@@ -1,3 +1,4 @@
+from functools import lru_cache
 
 
 class Solution:
@@ -6,6 +7,7 @@ class Solution:
         height = len(dungeon[0])
         goal = (width - 1, height - 1)
 
+        @lru_cache(maxsize=width * height)
         def minimal_damage(x, y):
             base = dungeon[x][y]
             if (x, y) == goal:
