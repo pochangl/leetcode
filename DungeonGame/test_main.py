@@ -47,3 +47,7 @@ class TestSolution(TestCase):
                 result = Solution().calculateMinimumHP(board)
                 answer = SatSolver().calculateMinimumHP(board)
                 self.assertEqual(result, answer, board)
+
+    def test_performance(self):
+        board = next(all_board(11))
+        Solution().calculateMinimumHP(board)
