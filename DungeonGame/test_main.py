@@ -42,7 +42,7 @@ def all_board(size):
 
 class TestSolution(TestCase):
     def test_case(self):
-        for size in range(1, 3):
+        for size in range(1, 4):
             for board in all_board(size):
                 result = Solution().calculateMinimumHP(board)
                 answer = SatSolver().calculateMinimumHP(board)
