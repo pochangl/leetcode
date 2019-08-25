@@ -8,7 +8,7 @@ class BrutalSolution:
         half = total / 2
         length = len(A)
 
-        for size in range(length - 1):
+        for size in range(length):
             for indexes in combinations(range(length), length - size):
                 subtotal = sum(A[index] for index in indexes)
                 if subtotal == half:

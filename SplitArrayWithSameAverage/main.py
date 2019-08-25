@@ -25,7 +25,7 @@ class Solution:
         A.reverse()
         for array in combinations(A, mindex + 1):
             subtotal = 0
-            for value in reversed(array):
+            for value in array:
                 subtotal += value
                 if subtotal == half:
                     return True

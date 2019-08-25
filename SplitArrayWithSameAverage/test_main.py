@@ -40,8 +40,11 @@ class TestSolution(TestCase):
 
     def test_fail_2(self):
         '失敗的情境'
-        self.run_test([6,8,18,3,1], False)
+        self.run_test([6, 8, 18, 3, 1], False)
 
+    def test_fail_3(self):
+        '失敗的情境'
+        self.run_test([4, 3, 3, 1, 1], True)
 
     def test_four(self):
         '雙數長度窮舉'
