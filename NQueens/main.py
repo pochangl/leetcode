@@ -1,6 +1,6 @@
 from collections import namedtuple
 from contextlib import ExitStack
-from utils.recursion import stack, unstack
+from utils.recursion import occupy, unoccupy
 
 
 Queen = namedtuple('Queen', ('x', 'y'))
@@ -32,8 +32,8 @@ def solve(n, queens, availables):
         queen = Queen(x, y)
         if all(compatible(queen, q) for q in queens):
             with ExitStack() as es:
-                es.enter_context(stack(queens, queen))
-                es.enter_context(unstack(availables, y))
+                es.enter_context(occupy(queens, queen))
+                es.enter_context(unoccupy(availables, y))
 
                 if len(queens) == n:
                     yield render(queens)
