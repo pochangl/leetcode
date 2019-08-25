@@ -29,10 +29,17 @@ class TestSolution(TestCase):
             self.assertEqual(solver([value]), False)
 
     def test_zeroes(self):
-        '零不管多長都ok'
         solver = Solution().splitArraySameAverage
-        for value in range(1, 100):
+        self.assertEqual(solver([]), False)
+        self.assertEqual(solver([0]), False)
+
+        # 零不管多長都ok
+        for value in range(2, 100):
             self.assertEqual(solver([0] * value), True)
+
+    def test_empty(self):
+        solver = Solution().splitArraySameAverage
+        self.assertEqual(solver([]), False)
 
     def test_fail_1(self):
         '失敗的情境'
@@ -41,14 +48,6 @@ class TestSolution(TestCase):
     def test_fail_2(self):
         '失敗的情境'
         self.run_test([6, 8, 18, 3, 1], False)
-
-    def test_fail_3(self):
-        '失敗的情境'
-        self.run_test([4, 3, 3, 1, 1], True)
-
-    def test_fail_4(self):
-        '失敗的情境'
-        self.run_test([2, 2, 1, 1, 0], True)
 
     def test_four(self):
         '雙數長度窮舉'
