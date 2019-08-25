@@ -3,7 +3,7 @@ from collections import defaultdict
 
 def find_steps(routes, S, T):
     stops = defaultdict(set)
-    stopped_by = set([S])
+    stopped_by = set([])
 
     for route in routes:
         for stop1 in route:
@@ -11,13 +11,13 @@ def find_steps(routes, S, T):
                 if stop1 != stop2:
                     stops[stop1].add(stop2)
 
-    queue = stops[S]
+    queue = set([S])
     nxt = set()
     count = 0
 
     while queue:
         if T in queue:
-            return count + 1
+            return count
         for stop_num in queue:
             if stop_num not in stopped_by:
                 stopped_by.add(stop_num)
