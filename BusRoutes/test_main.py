@@ -49,6 +49,6 @@ class TestSolution(TestCase):
                 list(lst[3:6]),
                 list(lst[6:9]),
             ]
-            answer = BrutalSolution().numBusesToDestination(routes, 0, 8)
-            result = Solution().numBusesToDestination(routes, 0, 8)
+            answer = BrutalSolution().numBusesToDestination(routes, 0, 2)
+            result = Solution().numBusesToDestination(routes, 0, 2)
             self.assertEqual(answer, result, routes)
