@@ -64,3 +64,15 @@ class TestSolution(Mixin, TestCase):
                 list(lst[6:9]),
             ]
             self.run_test(routes, 0, 2)
+
+    def test_limit(self):
+        '''
+            超時了, 所以測一下極限
+        '''
+        start = 0
+        routes = []
+        for i in range(500):
+            routes.append(range(start, start + 500))
+            start = start + 500 - 1
+
+        Solution().numBusesToDestination(routes, 0, start)

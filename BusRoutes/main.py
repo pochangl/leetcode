@@ -6,10 +6,9 @@ def find_steps(routes, S, T):
     stopped_by = set([])
 
     for route in routes:
-        for stop1 in route:
-            for stop2 in route:
-                if stop1 != stop2:
-                    stops[stop1].add(stop2)
+        for stop_num in route:
+            stops[stop_num].update(route)
+            stops[stop_num].remove(stop_num)
 
     queue = set([S])
     nxt = set()
