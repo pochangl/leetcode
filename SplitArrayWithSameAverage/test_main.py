@@ -38,14 +38,19 @@ class TestSolution(TestCase):
         '失敗的情境'
         self.run_test([2, 0, 5, 6, 16, 12, 15, 12, 4], True)
 
+    def test_fail_2(self):
+        '失敗的情境'
+        self.run_test([6,8,18,3,1], False)
+
+
     def test_four(self):
         '雙數長度窮舉'
-        for A in product(range(4), repeat=4):
+        for A in product(range(10), repeat=4):
             self.run_test(A)
 
     def test_five(self):
         '單數長度 array 窮舉'
-        for A in product(range(5), repeat=5):
+        for A in product(range(10), repeat=5):
             self.run_test(A)
 
     def test_performance(self):
