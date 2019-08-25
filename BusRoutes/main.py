@@ -14,9 +14,10 @@ def find_steps(routes, S, T):
     queue = stops[S]
     nxt = set()
     count = 0
+
     while queue:
         if T in queue:
-            return count
+            return count + 1
         for stop_num in queue:
             if stop_num not in stopped_by:
                 stopped_by.add(stop_num)
@@ -24,6 +25,7 @@ def find_steps(routes, S, T):
                 stops.pop(stop_num)
         queue = nxt
         nxt = set()
+        count += 1
 
     return -1
 
