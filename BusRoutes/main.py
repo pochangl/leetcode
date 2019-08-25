@@ -1,9 +1,9 @@
-from utils.recursion import stack
 from collections import defaultdict
 
 
-def brutal_pathes(routes, S, T):
+def find_steps(routes, S, T):
     stops = defaultdict(set)
+    stopped_by = set([S])
 
     for route in routes:
         for stop1 in route:
@@ -11,33 +11,23 @@ def brutal_pathes(routes, S, T):
                 if stop1 != stop2:
                     stops[stop1].add(stop2)
 
-    path = []
-    passed = dict()
+    queue = stops[S]
+    nxt = set()
+    count = 0
+    while queue:
+        if T in queue:
+            return count
+        for stop_num in queue:
+            if stop_num not in stopped_by:
+                stopped_by.add(stop_num)
+                nxt.update(stops[stop_num])
+                stops.pop(stop_num)
+        queue = nxt
+        nxt = set()
 
-    def search(stop_num):
-        with stack(path, stop_num):
-            if stop_num in passed and len(path) >= passed[stop_num]:
-                return
-
-            passed[stop_num] = len(path)
-
-            if stop_num == T:
-                yield path.copy()
-            for nxt in stops[stop_num]:
-                yield from search(nxt)
-            return
-
-    return search(S)
+    return -1
 
 
 class Solution:
     def numBusesToDestination(self, routes: 'matrix', S: int, T: int) -> int:
-        assert len(routes) < 4
-        assert len(routes[0]) < 4
-        pathes = list(brutal_pathes(routes, S, T))
-        try:
-            best_path = min(pathes, key=lambda p: len(p))
-        except ValueError:
-            return -1
-        length = len(best_path)
-        return length - 1
+        return find_steps(routes, S, T)
