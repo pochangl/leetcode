@@ -5,11 +5,15 @@ from .main import Solution
 
 
 class TestSolution(TestCase):
-    def run_test(self, A):
+    def run_test(self, A, expect=None):
         A = list(A)
-        expect = BrutalSolution().splitArraySameAverage(A)
-        answer = Solution().splitArraySameAverage(A)
-        self.assertEqual(answer, expect, A)
+        answer = BrutalSolution().splitArraySameAverage(A)
+        result = Solution().splitArraySameAverage(A)
+
+        self.assertEqual(answer, result, A)
+
+        if expect is not None:
+            self.assertEqual(result, expect, A)
 
     def test_case_basic_1(self):
         self.run_test([1, 2, 3, 4, 5, 6, 7, 8])
@@ -29,6 +33,10 @@ class TestSolution(TestCase):
         solver = Solution().splitArraySameAverage
         for value in range(1, 100):
             self.assertEqual(solver([0] * value), True)
+
+    def test_fail_1(self):
+        '失敗的情境'
+        self.run_test([2, 0, 5, 6, 16, 12, 15, 12, 4], True)
 
     def test_four(self):
         '雙數長度窮舉'

@@ -6,7 +6,6 @@ class Solution:
         # 統計數據
         total = sum(A)
         half = total // 2
-        length = len(A)
         # 總合為單數就不行
         if total % 2:
             return False
@@ -23,9 +22,12 @@ class Solution:
         if subtotal == half:
             return True
 
-        for size in range(length - 1):
-            for indexes in combinations(range(length), length - size):
-                subtotal = sum(A[index] for index in indexes)
+        A.reverse()
+        for array in combinations(A, mindex + 1):
+            subtotal = 0
+            for value in reversed(array):
+                subtotal += value
                 if subtotal == half:
                     return True
+
         return False
