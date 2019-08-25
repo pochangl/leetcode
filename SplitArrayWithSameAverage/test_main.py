@@ -39,3 +39,8 @@ class TestSolution(TestCase):
         '單數長度 array 窮舉'
         for A in product(range(5), repeat=5):
             self.run_test(A)
+
+    def test_performance(self):
+        for size in range(1, 30):
+            print('size', size, flush=True)
+            Solution().splitArraySameAverage(list(range(size)))
