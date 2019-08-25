@@ -29,6 +29,12 @@ class TestBrutal(TestCase):
         T = 6
         self.run_test(routes, S, T, -1)
 
+    def test_no_move(self):
+        routes = [[0, 0, 0], [0, 0, 0]]
+        S = 0
+        T = 0
+        self.run_test(routes, S, T, 0)
+
 
 class TestSolution(TestCase):
     def test_small_brutal(self):
