@@ -1,27 +1,36 @@
 from collections import defaultdict
+from itertools import combinations
 
 
 def find_steps(routes, S, T):
-    stops = defaultdict(set)
-    stopped_by = set([])
+    if S == T:
+        return 0
+    routes = list(map(set, routes))
+    buses = defaultdict(set)
+    last_bus = set(filter(lambda bus_num: T in routes[bus_num], range(len(routes))))
+    visited = set()
 
-    for route in routes:
-        for stop_num in route:
-            stops[stop_num].update(route)
-            stops[stop_num].remove(stop_num)
+    for bus_num1, bus_num2 in combinations(range(len(routes)), 2):
+        if routes[bus_num1] & routes[bus_num2]:
+            buses[bus_num1].add(bus_num2)
+            buses[bus_num2].add(bus_num1)
 
-    queue = set([S])
+    queue = set()
+    for bus_num, route in enumerate(routes):
+        if S in route:
+            queue.add(bus_num)
+
     nxt = set()
-    count = 0
+    count = 1
 
     while queue:
-        if T in queue:
+        if queue & last_bus:
             return count
-        for stop_num in queue:
-            if stop_num not in stopped_by:
-                stopped_by.add(stop_num)
-                nxt.update(stops[stop_num])
-                stops.pop(stop_num)
+        for bus_num in queue:
+            if bus_num not in visited:
+                visited.add(bus_num)
+                nxt.update(buses[bus_num])
+                buses.pop(bus_num)
         queue = nxt
         nxt = set()
         count += 1
