@@ -10,12 +10,14 @@ class TestBrutal(TestCase):
         self.assertEqual(answer, expect, routes)
 
     def test_case1(self):
+        '題目自備的情境'
         routes = [[1, 2, 7], [3, 6, 7]]
         S = 1
         T = 6
         self.run_test(routes, S, T, 2)
 
     def test_case2(self):
+        '測路徑'
         routes = [[1, 2, 7], [3, 6, 7]]
         S = 1
         T = 6
@@ -24,12 +26,14 @@ class TestBrutal(TestCase):
         self.assertEqual(best_path, [1, 7, 6])
 
     def test_empty(self):
+        '測沒有結果'
         routes = [[1, 2, 5], [3, 6, 7]]
         S = 1
         T = 6
         self.run_test(routes, S, T, -1)
 
     def test_no_move(self):
+        '原地不動'
         routes = [[0, 0, 0], [0, 0, 0]]
         S = 0
         T = 0
