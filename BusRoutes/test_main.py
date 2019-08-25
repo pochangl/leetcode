@@ -1,6 +1,7 @@
 from unittest import TestCase
+from itertools import product
 from .brutal import BrutalSolution, brutal_pathes
-# from .main import Solution
+from .main import Solution
 
 
 class TestBrutal(TestCase):
@@ -27,3 +28,17 @@ class TestBrutal(TestCase):
         S = 1
         T = 6
         self.run_test(routes, S, T, -1)
+
+
+class TestSolution(TestCase):
+    def test_small_brutal(self):
+        size = 3
+        for lst in product(range(size), repeat=size * size):
+            routes = [
+                list(lst[:3]),
+                list(lst[3:6]),
+                list(lst[6:9]),
+            ]
+            answer = BrutalSolution().numBusesToDestination(routes, 0, 8)
+            result = Solution().numBusesToDestination(routes, 0, 8)
+            self.assertEqual(answer, result, routes)
