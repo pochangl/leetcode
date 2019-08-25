@@ -1,4 +1,4 @@
-from itertools import combinations
+from itertools import permutations
 
 
 class Solution:
@@ -7,7 +7,7 @@ class Solution:
         total = sum(A)
         half = total // 2
         # 總合為單數就不行
-        if total % 2:
+        if total % 2 or len(A) == 1:
             return False
 
         # 算出中位數
@@ -23,7 +23,7 @@ class Solution:
             return True
 
         A.reverse()
-        for array in combinations(A, mindex + 1):
+        for array in permutations(A, len(A) // 2):
             subtotal = 0
             for value in array:
                 subtotal += value

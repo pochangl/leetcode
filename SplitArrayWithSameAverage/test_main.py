@@ -46,6 +46,10 @@ class TestSolution(TestCase):
         '失敗的情境'
         self.run_test([4, 3, 3, 1, 1], True)
 
+    def test_fail_4(self):
+        '失敗的情境'
+        self.run_test([2, 2, 1, 1, 0], True)
+
     def test_four(self):
         '雙數長度窮舉'
         for A in product(range(10), repeat=4):
