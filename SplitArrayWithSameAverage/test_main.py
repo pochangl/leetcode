@@ -2,6 +2,7 @@ from unittest import TestCase
 from itertools import product
 from .brutal import BrutalSolution
 from .main import Solution
+from random import randint
 
 
 class TestSolution(TestCase):
@@ -49,6 +50,14 @@ class TestSolution(TestCase):
         '失敗的情境'
         self.run_test([6, 8, 18, 3, 1], False)
 
+    def test_fail_3(self):
+        '失敗的情境'
+        self.run_test([0, 0, 1, 3], True)
+
+    def test_fail_4(self):
+        '失敗的情境'
+        self.run_test([0, 0, 0, 1], False)
+
     def test_four(self):
         '雙數長度窮舉'
         for A in product(range(10), repeat=4):
@@ -61,5 +70,5 @@ class TestSolution(TestCase):
 
     def test_performance(self):
         for size in range(1, 30):
-            print('size', size, flush=True)
-            Solution().splitArraySameAverage(list(range(size)))
+            data = list(map(lambda x: randint(0, 1000), range(size)))
+            Solution().splitArraySameAverage(data)
