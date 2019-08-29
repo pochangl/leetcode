@@ -3,6 +3,13 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[colorlinks]{hyperref}
+\usepackage{color, colortbl}
+\usepackage{centernot}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usetkzobj{all}%IMPORTANT--recognizes points, lines, circles, etc
 \begin{document}
 	\title{Sudoku}
 	\author{Pochang Lee}
@@ -14,4 +21,156 @@
 E=MC^2
 E_a
 \end{equation}
+game status
+\begin{center}
+\begin{tabular} {l | c | c | c}
+	P1 \textbackslash P2 & rock & scissor & paper \\ \hline
+	rock	&  & P1 & P2 \\ \hline
+	scissor & P2 &  & P1 \\ \hline
+	paper	& P1 & P2 & 
+
+\end{tabular}
+\end{center}
+
+Player 1 status
+\begin{center}
+\begin{tabular}{ c c c c c c c c c | c }
+	$R$ & $S$ & $P$ & 	$R_{2}$ & $S_{2}$ & $P_{2}$ & $Win_{1}$ & $Win_{2}$ & $Draw$ & Satisfied\\ \hline
+	{\color{red}T} & F & F & {\color{red}T} & F & F & F & F & F & F \\ \hline
+	\rowcolor{green}
+	{\color{red}T} & {\color{white}F} & {\color{white}F} & {\color{white}F} & {\color{red}T} & {\color{white}F} & {\color{red}T} & {\color{white}F} & {\color{white}F} & {\color{red}T}\\ \hline
+	{\color{red}T} & F & F & F & F & {\color{red}T} & F & F & F & F \\ \hline
+	F & {\color{red}T} & F & {\color{red}T} & F & F & F & F & F & F \\ \hline
+	F & {\color{red}T} & F & F & {\color{red}T} & F & F & F & F & F \\ \hline
+	F & {\color{red}T} & F & F & F & {\color{red}T} & {\color{red}T} & F & F & F \\ \hline
+	F & F & {\color{red}T} & {\color{red}T} & F & F & {\color{red}T} & F & F & F \\ \hline
+	F & F & {\color{red}T} & F & {\color{red}T} & F & F & F & F & F \\ \hline
+	F & F & {\color{red}T} & F & F & {\color{red}T} & F & F & F & F \\ \hline
+	
+	{\color{red}T} & F & F & {\color{red}T} & F & F & F & F & F & F \\ \hline
+	{\color{red}T} & F & F & F & T & F & T & F & F & T \\ \hline
+	{\color{red}T} & F & F & F & F & {\color{red}T} & F & F & F & F \\ \hline
+	F & {\color{red}T} & F & {\color{red}T} & F & F & F & F & F & F \\ \hline
+	F & {\color{red}T} & F & F & {\color{red}T} & F & F & F & F & F \\ \hline
+	F & {\color{red}T} & F & F & F & {\color{red}T} & {\color{red}T} & F & F & F \\ \hline
+	F & F & {\color{red}T} & {\color{red}T} & F & F & {\color{red}T} & F & F & F \\ \hline
+	F & F & {\color{red}T} & F & {\color{red}T} & F & F & F & F & F \\ \hline
+	F & F & {\color{red}T} & F & F & {\color{red}T} & F & F & F & F
+	
+
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ c c c c c c c c c | c }
+	$R$ & $S$ & $P$ & 	$R_{2}$ & $S_{2}$ & $P_{2}$ & $Win_{1}$ & $Win_{2}$ & $Draw$ & Satisfied\\ \hline
+	{\color{green}T} & F & F & {\color{green}T} & F & F & F & F & T & {\color{green}T} \\ \hline
+	\rowcolor{green}
+	{\color{white}T} & F & F & F & {\color{white}T} & F & {\color{white}T} & F & F & {\color{white}T} \\ \hline
+	{\color{green}T} & F & F & F & F & {\color{green}T} & F & {\color{green}T} & F & {\color{green}T} \\ \hline
+	F & {\color{green}T} & F & {\color{green}T} & F & F & F & {\color{green}T} & F & {\color{green}T} \\ \hline
+	F & {\color{green}T} & F & F & {\color{green}T} & F & F & F & {\color{green}T} & {\color{green}T} \\ \hline
+	F & {\color{green}T} & F & F & F & {\color{green}T} & {\color{green}T} & F & F & {\color{green}T} \\ \hline
+	& & & & & & . \\
+	& & & & & & . \\
+	& & & & & & . \\
+	\rowcolor{red}
+	{\color{white}T} & {\color{white}T} & F & {\color{white}T} & F & F & F & F & F & F \\
+	
+
+\end{tabular}
+\end{center}
+$$fact1 \land fact2 \land fact3 \land \dots \land factN$$
+$$ (A \lor B \lor C \dots) \land (D \lor E \lor F \dots) \land (\dots $$
+(A or B or C ...) and (D or E or F ...) and (....
+
+$P \Rightarrow Q$
+\begin{center}
+\begin{tabular}{l | c | c}
+ 	P & Q & $P \Rightarrow Q$ \\ \hline
+	T & T & T \\ \hline
+	F & T & T \\ \hline
+	F & F & T \\ \hline
+	T & F & F \\ \hline
+\end{tabular}
+\end{center}
+\begin{equation}
+R_{ock} \Leftrightarrow \lnot P_{aper} \land \lnot S_{cissor}
+\end{equation}
+\begin{equation}
+(R_{ock} \lor (\lnot P_{aper} \land \lnot S_{cissor})) \land (\lnot R_{ock} \lor \lnot P_{aper} \lor \lnot S_{cissor})
+\end{equation}
+
+\begin{equation}
+(R \lor S \lor P)
+\end{equation}
+\begin{equation}
+(\lnot R \lor (\lnot S \land \lnot P)) \land (R \lor S \lor P)
+\end{equation}
+\begin{equation}
+(\lnot R \lor (\lnot S \land \lnot P))
+\end{equation}
+
+\begin{equation}
+(\lnot R \lor (\lnot S \land \lnot P)) \land (\lnot S \lor (\lnot R \land \lnot P)) \land (\lnot P \lor (\lnot S \land \lnot R))
+\end{equation}
+
+\begin{equation}
+(\lnot R \lor \lnot P) \land (\lnot R \lor \lnot S) \land (\lnot S \lor \lnot P)
+\end{equation}
+
+\begin{equation}
+	\underbrace{
+		(\lnot R \lor \lnot P) \land (\lnot R \lor \lnot S) \land (\lnot S \lor \lnot P)
+	}_{at \; most \; one} \land \underbrace{
+		(R \lor S \lor P)
+	}_{at \; least \; one}
+\end{equation}
+
+
+\begin{center}
+\begin{tabular}{c c}
+math & python \\ \hline
+$\lnot$ & not \\
+$\sim$ & not \\
+$\lor$ & or \\
+$\land$ & and 
+
+\end{tabular}
+\end{center}
+\begin{equation}
+P \Rightarrow R1, R \Rightarrow S1, S \Rightarrow P1
+\end{equation}
+\begin{equation}
+(\lnot P \lor R) \land (\lnot P \lor S) \land (\lnot R \lor S)
+\end{equation}
+\begin{center}
+\begin{tabular}{c | c | c | c | c | c | | c}
+
+\end{tabular}
+\end{center}
+\begin{equation}
+R_{(x, y)}
+\end{equation}
+
+\begin{equation}
+R_{(0, 0)}, R_{(width, height)}
+\end{equation}
+\begin{equation}
+(R_{(0, 0)}) \land (R_{(width, height)}) \land \dots 
+\end{equation}
+
+\begin{tikzpicture}[scale=1]
+\tkzDefPoint(0,0){A}  %center of circle 1
+\tkzDefPoint(1.5,0){B}  %center of circle 2
+\tkzInterCC[R](A,1.5 cm)(B,1.5 cm) \tkzGetPoints{M1}{N1} %get the intersection
+% of circles centered at A with radius 1 and B with radius 1.5 and store as M1, N1
+\begin{scope}
+\tkzClipCircle(A,M1)
+\tkzFillCircle[color=green!50,opacity=.5](B,M1)
+\end{scope}
+\tkzDrawCircle[R](A,1.5cm) %draw circle 1 centered at A with radius 1
+\tkzDrawCircle[R](B,1.5cm) %draw circle 2 centered at B with radius 1
+\tkzDrawPoints[color=orange, fill=orange](M1,N1)%Draw points
+\end{tikzpicture}
 \end{document}
