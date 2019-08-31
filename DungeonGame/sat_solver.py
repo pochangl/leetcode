@@ -37,14 +37,6 @@ def get_cnf(width, height):
     cnf += sat.basic_fact(Point(0, 0))
     cnf += sat.basic_fact(Point(max_x, max_y))
 
-    # edge case: 下邊, 只能往右走. 左 => 右
-    for x in range(width - 1):
-        cnf.append(sat.imply(Point(x, max_y), Point(x + 1, max_y)))
-
-    # edge case: 右邊, 只能往下走. 上 => 下
-    for y in range(height - 1):
-        cnf.append(sat.imply(Point(max_x, y), Point(max_x, y + 1)))
-
     for x, y in product(range(width - 1), range(height - 1)):
         '''
             點 => 右 or 下
@@ -54,7 +46,17 @@ def get_cnf(width, height):
         down = Point(x, y + 1)
         point = Point(x, y)
         cnf.append((sat.neg(point), right, down))
+
+        # 右跟下只能選一個
         cnf.extend(sat.Q([right, down]) < 2)
+
+    # edge case: 下邊, 只能往右走. 左 => 右
+    for x in range(width - 1):
+        cnf.append(sat.imply(Point(x, max_y), Point(x + 1, max_y)))
+
+    # edge case: 右邊, 只能往下走. 上 => 下
+    for y in range(height - 1):
+        cnf.append(sat.imply(Point(max_x, y), Point(max_x, y + 1)))
 
     return cnf
 
