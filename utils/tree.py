@@ -6,11 +6,15 @@ from collections import deque
 __all__ = ['BrutalTree']
 
 
-def left_child(index):
+def parent_pos(index):
+    return (index - 1) // 2
+
+
+def left_child_pos(index):
     return (index * 2) + 1
 
 
-def right_child(index):
+def right_child_pos(index):
     return (index * 2) + 2
 
 
@@ -24,8 +28,8 @@ def to_binary_tree(list_tree):
         while queue:
             index = queue.popleft()
             if list_tree[index]:
-                left = left_child(index)
-                right = right_child(index)
+                left = left_child_pos(index)
+                right = right_child_pos(index)
                 queue.append(left)
                 queue.append(right)
                 tree.append(True)
@@ -51,7 +55,7 @@ def brutal_trees(max_depth, require_root=True, data_factory=boolean_factory):
         cnf.append('0')
 
     for node in range(1, num_nodes):
-        parent = str((node - 1) // 2)
+        parent = str(parent_pos(node))
         node = str(node)
 
         cnf.append(sat.imply(node, parent))
