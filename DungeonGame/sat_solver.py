@@ -31,43 +31,30 @@ def str_to_xy(value):
 def get_cnf(width, height):
     cnf = []
 
-    cnf += sat.basic_fact(Point(0, 0))
-    cnf += sat.basic_fact(Point(width - 1, height - 1))
+    max_y = height - 1
+    max_x = width - 1
 
-    # edge case: 上邊, 一定是左邊來的 右 => 左
-    y = 0
-    for x in range(1, width):
-        cnf.append(sat.imply(Point(x, y), Point(x - 1, y)))
+    cnf += sat.basic_fact(Point(0, 0))
+    cnf += sat.basic_fact(Point(max_x, max_y))
 
     # edge case: 下邊, 只能往右走. 左 => 右
-    y = height - 1
-    for x in range(1, width):
-        cnf.append(sat.imply(Point(x - 1, y), Point(x, y)))
-
-    # edge case: 左邊, 一定是上面來的 下 => 上
-    x = 0
-    for y in range(1, height):
-        cnf.append(sat.imply(Point(x, y), Point(x, y - 1)))
+    for x in range(width - 1):
+        cnf.append(sat.imply(Point(x, max_y), Point(x + 1, max_y)))
 
     # edge case: 右邊, 只能往下走. 上 => 下
-    x = width - 1
-    for y in range(1, height):
-        cnf.append(sat.imply(Point(x, y - 1), Point(x, y)))
+    for y in range(height - 1):
+        cnf.append(sat.imply(Point(max_x, y), Point(max_x, y + 1)))
 
-    for x, y in product(range(1, width), range(1, height)):
+    for x, y in product(range(width - 1), range(height - 1)):
         '''
-            點 => 左 or 上
-            如果這個點
+            點 => 右 or 下
+            一下是往右或往下走
         '''
-        left = Point(x - 1, y)
-        up = Point(x, y - 1)
+        right = Point(x + 1, y)
+        down = Point(x, y + 1)
         point = Point(x, y)
-        cnf.append((sat.neg(point), left, up))
-
-    for offset in range(width + height - 1):
-        '每個線上 y = -x + b 只能有一個點'
-        cnf += sat.one_of(Point(x, y)
-                          for x, y in get_points(width, height, -1, offset))
+        cnf.append((sat.neg(point), right, down))
+        cnf.extend(sat.Q([right, down]) < 2)
 
     return cnf
 

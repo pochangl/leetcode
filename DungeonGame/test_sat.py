@@ -13,7 +13,7 @@ class TestPathes(TestCase):
 
         # check initial position and goal
         self.assertEqual(initial, (0, 0))
-        self.assertEqual(goal, (width - 1, height - 1))
+        self.assertEqual(goal, (width - 1, height - 1), path)
 
         # check length
         self.assertEqual(len(path), width + height - 1, path)
