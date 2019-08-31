@@ -1,7 +1,9 @@
 import random
 from unittest import TestCase
 from .main import Solution
+from .sat_solver import SatSolution
 from dsa.tree.binary import BinaryTree
+from utils.tree import brutal_trees
 
 
 node = BinaryTree(0)
@@ -215,3 +217,13 @@ class TestSolution(TestCase):
         for level, expect in zip(levels, expects):
             data = [0] * (2**level - 1)
             self.run_test(data, expect)
+
+
+class TestAgainstSAT(TestCase):
+    def test_depth_3(self):
+        trees = brutal_trees(4)
+        for arr in trees:
+            tree = BinaryTree.from_list(arr)
+            result = Solution().minCameraCover(tree)
+            sat = SatSolution().minCameraCover(tree)
+            self.assertEqual(sat, result)
