@@ -34,27 +34,31 @@ def get_cnf(width, height):
     max_y = height - 1
     max_x = width - 1
 
+    '''
+        確定的事實, 起點和終點
+    '''
     cnf += sat.basic_fact(Point(0, 0))
     cnf += sat.basic_fact(Point(max_x, max_y))
 
     for x, y in product(range(width - 1), range(height - 1)):
         '''
+            遞迴定義
             點 => 右 or 下
-            一下是往右或往下走
         '''
         right = Point(x + 1, y)
         down = Point(x, y + 1)
         point = Point(x, y)
+        ''' 一下是往右或往下走 '''
         cnf.append((sat.neg(point), right, down))
 
-        # 右跟下只能選一個
+        ''' 右跟下只能選一個 '''
         cnf.extend(sat.Q([right, down]) < 2)
 
-    # edge case: 下邊, 只能往右走. 左 => 右
+    ''' edge case: 下邊, 只能往右走. 左 => 右 '''
     for x in range(width - 1):
         cnf.append(sat.imply(Point(x, max_y), Point(x + 1, max_y)))
 
-    # edge case: 右邊, 只能往下走. 上 => 下
+    ''' edge case: 右邊, 只能往下走. 上 => 下 '''
     for y in range(height - 1):
         cnf.append(sat.imply(Point(max_x, y), Point(max_x, y + 1)))
 
