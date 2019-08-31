@@ -35,6 +35,15 @@ class BinaryTree:
     def __str__(self):
         return repr(self)
 
+    @property
+    def depth(self):
+        depthes = [0]
+        if self.left:
+            depthes.append(self.left.depth)
+        if self.right:
+            depthes.append(self.right.depth)
+        return max(depthes) + 1
+
     def clone(self):
         lst = self.to_list()
         return type(self).from_list(lst)

@@ -95,3 +95,19 @@ class TestBinaryTree(TestCase):
         copied = tree.clone()
         self.assertEqual(tree, copied)
         verify(tree, copied)
+
+    def test_depth(self):
+        tree = BT.from_list([0])
+        self.assertEqual(tree.depth, 1)
+
+        tree = BT.from_list([0, None, None])
+        self.assertEqual(tree.depth, 1)
+
+        tree = BT.from_list([0, 0])
+        self.assertEqual(tree.depth, 2)
+
+        tree = BT.from_list([0, None, 0])
+        self.assertEqual(tree.depth, 2)
+
+        tree = BT.from_list([0] * 7)
+        self.assertEqual(tree.depth, 3)
