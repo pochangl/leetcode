@@ -3,6 +3,10 @@ from collections import deque
 from contextlib import suppress
 
 
+class Null:
+    def __bool__(self):
+        return False
+
 class BinaryTree:
     left = None
     right = None
@@ -71,6 +75,26 @@ class BinaryTree:
 
                 more += bool(node.left)
                 more += bool(node.right)
+
+    def to_full_list(self):
+        '''
+            breadth first 把所有 Node 的印出來, 包括空的
+        '''
+        depth = self.depth
+        num_nodes = (2 ** depth) - 1
+
+        tree = BinaryTree.from_list([Null()] * num_nodes)
+        tree.overwrite(self)
+        lst = tree.to_list()
+        lst = map(lambda value: None if isinstance(value, Null) else value, lst)
+        return list(lst)
+
+    def overwrite(self, tree):
+        self.val = tree.val
+        if tree.left:
+            self.left.overwrite(tree.left)
+        if tree.right:
+            self.right.overwrite(tree.right)
 
     @classmethod
     def from_list(cls, lst):

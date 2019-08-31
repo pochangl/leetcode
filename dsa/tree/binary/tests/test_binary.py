@@ -111,3 +111,19 @@ class TestBinaryTree(TestCase):
 
         tree = BT.from_list([0] * 7)
         self.assertEqual(tree.depth, 3)
+
+    def test_to_full_list(self):
+        tree = BT.from_list([0])
+        self.assertEqual(tree.to_full_list(), [0])
+
+        tree = BT.from_list([0, 1])
+        self.assertEqual(tree.to_full_list(), [0, 1, None])
+
+        tree = BT.from_list([0, None, 1])
+        self.assertEqual(tree.to_full_list(), [0, None, 1])
+
+        tree = BT.from_list([0, None, 1, 1, 1])
+        self.assertEqual(tree.to_full_list(), [0, None, 1, None, None, 1, 1])
+
+        tree = BT.from_list([0, 1, None, 1, 1])
+        self.assertEqual(tree.to_full_list(), [0, 1, None, 1, 1, None, None])
