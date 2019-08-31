@@ -32,6 +32,16 @@ game status
 \end{tabular}
 \end{center}
 
+\begin{center}
+\begin{tabular} {l | c | c | c}
+	State \textbackslash Symbol & R & S & P \\ \hline
+	Rock & {\color{green}T} & F & F \\ \hline
+	Scissor & F & {\color{green}T} & F \\ \hline
+	Paper & F & F & {\color{green}T} \\ \hline
+
+\end{tabular}
+\end{center}
+
 Player 1 status
 \begin{center}
 \begin{tabular}{ c c c c c c c c c | c }
@@ -95,10 +105,10 @@ $P \Rightarrow Q$
 \end{tabular}
 \end{center}
 \begin{equation}
-R_{ock} \Leftrightarrow \lnot P_{aper} \land \lnot S_{cissor}
+R \Leftrightarrow \lnot P \land \lnot S
 \end{equation}
 \begin{equation}
-(R_{ock} \lor (\lnot P_{aper} \land \lnot S_{cissor})) \land (\lnot R_{ock} \lor \lnot P_{aper} \lor \lnot S_{cissor})
+(R \lor (\lnot P \land \lnot S)) \land (\lnot R \lor \lnot P \lor \lnot S)
 \end{equation}
 
 \begin{equation}
@@ -154,10 +164,10 @@ R_{(x, y)}
 \end{equation}
 
 \begin{equation}
-R_{(0, 0)}, R_{(width, height)}
+R_{(0, 0)}, R_{(x\_max,\ y\_max)}
 \end{equation}
 \begin{equation}
-(R_{(0, 0)}) \land (R_{(width, height)}) \land \dots 
+R_{(0, 0)} \land R_{(x\_max,\ y\_max)} \land \dots 
 \end{equation}
 
 \begin{tikzpicture}[scale=1]
@@ -173,4 +183,47 @@ R_{(0, 0)}, R_{(width, height)}
 \tkzDrawCircle[R](B,1.5cm) %draw circle 2 centered at B with radius 1
 \tkzDrawPoints[color=orange, fill=orange](M1,N1)%Draw points
 \end{tikzpicture}
+
+\begin{equation}
+	R_{(1, 3)} \Rightarrow R_{(2, 3)}
+\end{equation}
+\begin{equation}
+	R_{(x, h)} \Rightarrow R_{(x + 1,\ y\_max)}
+\end{equation}
+\begin{equation}
+	R_{(w, y)} \Rightarrow R_{(x\_max,\ y + 1)}
+\end{equation}
+\begin{equation}
+R_{(1,\ 1)} \Rightarrow R_{(2,\ 1)} \lor R_{(1,\ 2)}
+\end{equation}
+\begin{equation}
+(\lnot R_{(1,\ 1)} \lor R_{(2,\ 1)} \lor R_{(1,\ 2)})
+\end{equation}
+\begin{equation}
+R_{(2,\ 1)} \Rightarrow \lnot R_{(1,\ 2)}
+\end{equation}
+\begin{equation}
+R_{(1,\ 2)} \Rightarrow \lnot R_{(2,\ 1)}
+\end{equation}
+\begin{equation}
+(\lnot R_{(2,\ 1)} \lor \lnot R_{(1,\ 2)}) \land (\lnot R_{(1,\ 2)} \lor R_{(2,\ 1)})
+\end{equation}
+\begin{equation}
+(\lnot R_{(2,\ 1)} \lor \lnot R_{(1,\ 2)})
+\end{equation}
+\begin{equation}
+\dots \land (\lnot R_{(1,\ 1)} \lor R_{(2,\ 1)} \lor R_{(1,\ 2)}) \land (\lnot R_{(2,\ 1)} \lor \lnot R_{(1,\ 2)}) \land \dots
+\end{equation}
+\begin{equation}
+R_{(3, 0)} \Rightarrow R_{(3, 1)}
+\end{equation}
+\begin{equation}
+\dots \land (\lnot R_{(3, 0)} \lor R_{(3, 1)}) \land \dots
+\end{equation}
+\begin{equation}
+R_{(0, 3)} \Rightarrow R_{(1, 3)}
+\end{equation}
+\begin{equation}
+\dots \land (\lnot R_{(0, 3)} \lor R_{(1, 3)}) \land \dots
+\end{equation}
 \end{document}
