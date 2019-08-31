@@ -59,8 +59,8 @@ def get_cnf(width, height):
             點 => 左 or 上
             如果這個點
         '''
-        up = Point(x - 1, y)
-        left = Point(x, y - 1)
+        left = Point(x - 1, y)
+        up = Point(x, y - 1)
         point = Point(x, y)
         cnf.append((sat.neg(point), left, up))
 
