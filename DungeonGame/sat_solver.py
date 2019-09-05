@@ -5,15 +5,15 @@ from utils.line import get_points
 
 
 @lru_cache(maxsize=1000)
-def Point(x, y):
+def Point(point):
     '''
         descriptions:
             把 x, y 轉成 SAT 用的字串
         example:
-            >>> Point(1, 2)
+            >>> Point((1, 2))
             '1 2'
     '''
-    return '{} {}'.format(x, y)
+    return '{} {}'.format(*point)
 
 
 def str_to_xy(value):
@@ -37,30 +37,30 @@ def get_cnf(width, height):
     '''
         確定的事實, 起點和終點
     '''
-    cnf += sat.basic_fact(Point(0, 0))
-    cnf += sat.basic_fact(Point(max_x, max_y))
+    cnf += sat.basic_fact(Point((0, 0)))
+    cnf += sat.basic_fact(Point((max_x, max_y)))
 
-    for x, y in product(range(width - 1), range(height - 1)):
+    for x, y in product(range(width), range(height)):
         '''
             遞迴定義
             點 => 右 or 下
         '''
-        right = Point(x + 1, y)
-        down = Point(x, y + 1)
-        point = Point(x, y)
-        ''' 一下是往右或往下走 '''
-        cnf.append((sat.neg(point), right, down))
+        point = Point((x, y))
+        right = x + 1, y
+        down = x, y + 1
+        ''' 只使用有效的點 '''
+        subsequents = filter(lambda p: p[0] < width and p[1] < height, [right, down])
 
-        ''' 右跟下只能選一個 '''
-        cnf.extend(sat.Q([right, down]) < 2)
+        ''' 換成符號 '''
+        subsequents = tuple(map(Point, subsequents))
 
-    ''' edge case: 下邊, 只能往右走. 左 => 右 '''
-    for x in range(width - 1):
-        cnf.append(sat.imply(Point(x, max_y), Point(x + 1, max_y)))
+        ''' 排除掉終點 '''
+        if len(subsequents):
+            ''' 一下是往右或往下走 '''
+            cnf.append((sat.neg(point),) + subsequents)
 
-    ''' edge case: 右邊, 只能往下走. 上 => 下 '''
-    for y in range(height - 1):
-        cnf.append(sat.imply(Point(max_x, y), Point(max_x, y + 1)))
+            ''' 右跟下只能選一個 '''
+            cnf.extend(sat.Q(subsequents) < 2)
 
     return cnf
 
@@ -113,6 +113,5 @@ class SatSolver:
         return min(required_health(dungeon, path) for path in pathes)
 
 
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
+import doctest
+doctest.testmod()
